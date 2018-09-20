@@ -11,8 +11,7 @@
         android:id="@+id/customtoolbarAddBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:titleTextColor="#ffffff" />
+        android:background="@color/colorPrimary"/>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
