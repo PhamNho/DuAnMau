@@ -43,6 +43,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:onClick="showBookTypeActivity"
                 android:id="@+id/imgBookType"
                 android:layout_width="100dp"
                 android:layout_height="100dp"

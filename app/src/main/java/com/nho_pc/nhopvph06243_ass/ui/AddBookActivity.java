@@ -34,7 +34,6 @@ public class AddBookActivity extends AppCompatActivity {
         customtoolbarAddBook.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),BookActivity.class));
                 finish();
             }
         });
@@ -52,10 +51,6 @@ public class AddBookActivity extends AppCompatActivity {
         edtQuantily = (EditText) findViewById(R.id.edtQuantily);
     }
 
-    public void addBookType(View view) {
-
-    }
-
     public void addBook(View view) {
 
     }
@@ -63,5 +58,9 @@ public class AddBookActivity extends AppCompatActivity {
     public void cancelAddBook(View view) {
         finish();
         Toast.makeText(this, "Đã hủy thêm sách", Toast.LENGTH_SHORT).show();
+    }
+
+    public void addBookTypes(View view) {
+        startActivity(new Intent(getApplicationContext(),AddBookTypeActivity.class));
     }
 }

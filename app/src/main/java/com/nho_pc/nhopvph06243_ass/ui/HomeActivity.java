@@ -48,4 +48,8 @@ public class HomeActivity extends AppCompatActivity {
     public void showBookActivity(View view) {
         startActivity(new Intent(HomeActivity.this, BookActivity.class));
     }
+
+    public void showBookTypeActivity(View view) {
+        startActivity(new Intent(HomeActivity.this, BookTypeActivity.class));
+    }
 }
