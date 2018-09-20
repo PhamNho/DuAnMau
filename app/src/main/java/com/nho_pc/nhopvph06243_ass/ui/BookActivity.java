@@ -35,7 +35,8 @@ public class BookActivity extends AppCompatActivity {
         });
     }
 
-    public void addBook(View view) {
-
+    public void addBooks(View view) {
+        startActivity(new Intent(getApplicationContext(),AddBookActivity.class));
+        finish();
     }
 }
