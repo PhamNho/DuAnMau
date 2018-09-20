@@ -52,4 +52,8 @@ public class HomeActivity extends AppCompatActivity {
     public void showBookTypeActivity(View view) {
         startActivity(new Intent(HomeActivity.this, BookTypeActivity.class));
     }
+
+    public void showBillActivity(View view) {
+        startActivity(new Intent(HomeActivity.this, BillActivity.class));
+    }
 }

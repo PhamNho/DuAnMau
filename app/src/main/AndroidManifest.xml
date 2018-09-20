@@ -45,7 +45,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.BookTypeActivity" />
         <activity android:name=".ui.AddBookTypeActivity" />
-        <activity android:name=".ui.BillActivity"></activity>
+        <activity android:name=".ui.BillActivity" />
+        <activity android:name=".ui.AddBillActivity"></activity>
     </application>
 
 </manifest>
