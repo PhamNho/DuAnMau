@@ -46,7 +46,9 @@
         <activity android:name=".ui.BookTypeActivity" />
         <activity android:name=".ui.AddBookTypeActivity" />
         <activity android:name=".ui.BillActivity" />
-        <activity android:name=".ui.AddBillActivity"></activity>
+        <activity android:name=".ui.AddBillActivity" />
+        <activity android:name=".ui.TopBookActivity" />
+        <activity android:name=".ui.StatisticsActivity"></activity>
     </application>
 
 </manifest>

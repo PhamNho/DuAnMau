@@ -56,4 +56,12 @@ public class HomeActivity extends AppCompatActivity {
     public void showBillActivity(View view) {
         startActivity(new Intent(HomeActivity.this, BillActivity.class));
     }
+
+    public void showTopBookActivity(View view) {
+        startActivity(new Intent(HomeActivity.this, TopBookActivity.class));
+    }
+
+    public void showStatisticsActivity(View view) {
+        startActivity(new Intent(HomeActivity.this, StatisticsActivity.class));
+    }
 }
