@@ -13,6 +13,9 @@ public class BookType {
         this.viTri = viTri;
     }
 
+    public BookType() {
+    }
+
     public String getMaTheLoai() {
         return maTheLoai;
     }

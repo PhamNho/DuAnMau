@@ -30,11 +30,12 @@
                 android:layout_weight="3.5">
 
                 <EditText
-                    android:inputType="text"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:imeOptions="actionDone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Tìm kiếm" />
+                    android:hint="Tháng" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
