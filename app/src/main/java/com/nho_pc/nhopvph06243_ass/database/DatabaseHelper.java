@@ -11,6 +11,8 @@ import com.nho_pc.nhopvph06243_ass.Constant;
 import com.nho_pc.nhopvph06243_ass.model.Users;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+    private SQLiteDatabase database;
+
     public final static String USER_TABLE = "users";
     public final static String COLUMN_USERNAME = "Username";
     public final static String COLUMN_PASSWORD = "Password";
