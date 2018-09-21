@@ -6,7 +6,7 @@
     <string name="notify_empty_user_name">Không được bỏ trống !</string>
     <string name="notify_empty_pass_word">Không được bỏ trống !</string>
     <string name="notify_min_length_pass">Mật khẩu phải lớn hơn 6 ký tự !</string>
-    <string name="notify_empty_user">User Name không được để trống !</string>
+    <string name="notify_empty_user">UserName không được để trống !</string>
     <string name="notify_length_pass">Password phải lớn hơn 6 ký tự !</string>
     <string name="notify_empty_pass">Password không được để trống !</string>
 </resources>

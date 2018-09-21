@@ -11,14 +11,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
+import com.nho_pc.nhopvph06243_ass.adapter.UserAdapter;
+import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
+import com.nho_pc.nhopvph06243_ass.model.Users;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
-    private Toolbar customtoolbarUser;
-    private ListView lvUser;
+      private Toolbar customtoolbarUser;
+//    private UserAdapter adapter;
+//    private UserDAO userDAO;
+//    private List<Users> usersList;
+
+    public static List<Users> usersList = new ArrayList<>();
+    ListView lvNguoiDung;
+    UserAdapter adapter = null;
+    UserDAO userDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +40,11 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         setTitle("Người dùng");
         customtoolbarUser = (Toolbar) findViewById(R.id.customtoolbarUser);
-        lvUser = (ListView) findViewById(R.id.lvUser);
+        userDAO=new UserDAO(UserActivity.this);
+        usersList=userDAO.getAllUsers();
+
+        adapter=new UserAdapter(this,usersList);
+
 
         setSupportActionBar(customtoolbarUser);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -39,49 +57,82 @@ public class UserActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        lvNguoiDung = (ListView) findViewById(R.id.lvUser);
+        userDAO = new UserDAO(UserActivity.this);
+        usersList = userDAO.getAllUsers();
+        adapter = new UserAdapter(this, usersList);
+        lvNguoiDung.setAdapter(adapter);
+//        lvNguoiDung.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position,
+//                                    long id) {
+//                Intent intent = new Intent(UserActivity.this, NguoiDungDetailActivity.class);
+//                Bundle b = new Bundle();
+//                b.putString("USERNAME", usersList.get(position).getUserName());
+//                b.putString("PHONE", usersList.get(position).getPhoneNumber());
+//                intent.putExtras(b);
+//                startActivity(intent);
+//            }
+//        });
+        lvNguoiDung.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(UserActivity.this,usersList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //biến fie menu xml thành giao diện
-        getMenuInflater().inflate(R.menu.menu_setting, menu);
-        return super.onCreateOptionsMenu(menu);
+    protected void onResume() {
+        super.onResume();
+        usersList.clear();
+        usersList = userDAO.getAllUsers();
+        adapter.changeDataset(userDAO.getAllUsers());
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.itemDoiMatKhau:
-                startActivity(new Intent(this, ChangePasswordActivity.class));
-                break;
-            case R.id.itemDangXuat:
-                //B1: định nghĩa alertDialog
-                AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-                //B2: thiết lập thông tin
-                builder.setTitle("Thông báo");
-                builder.setMessage("Bạn có muốn đăng xuất không ?");
-                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        finish();
-                        Toast.makeText(UserActivity.this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(UserActivity.this, "Đã hủy đăng xuất", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                //B3: hiển thị
-                builder.show();
-                break;
+        @Override
+        public boolean onCreateOptionsMenu (Menu menu){
+            //biến fie menu xml thành giao diện
+            getMenuInflater().inflate(R.menu.menu_setting, menu);
+            return super.onCreateOptionsMenu(menu);
         }
-        return super.onOptionsItemSelected(item);
-    }
 
-    public void addUsers(View view) {
-        startActivity(new Intent(UserActivity.this,AddUserActivity.class));
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+            switch (item.getItemId()) {
+                case R.id.itemDoiMatKhau:
+                    startActivity(new Intent(this, ChangePasswordActivity.class));
+                    break;
+                case R.id.itemDangXuat:
+                    //B1: định nghĩa alertDialog
+                    AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                    //B2: thiết lập thông tin
+                    builder.setTitle("Thông báo");
+                    builder.setMessage("Bạn có muốn đăng xuất không ?");
+                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            finish();
+                            Toast.makeText(UserActivity.this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(UserActivity.this, "Đã hủy đăng xuất", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    //B3: hiển thị
+                    builder.show();
+                    break;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+        public void addUsers (View view){
+            startActivity(new Intent(UserActivity.this, AddUserActivity.class));
+        }
     }
-}

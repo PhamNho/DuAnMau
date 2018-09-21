@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
+
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
 import com.nho_pc.nhopvph06243_ass.model.Users;
 
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (user2 == null) {
                         Toast.makeText(getApplicationContext(), "User chưa tồn tại !!!", Toast.LENGTH_LONG).show();
-                        Users user1 = new Users("admin", "66668888", "Nho Pham", "0962387053");
+                        Users user1 = new Users("admin", "admin123", "Phạm Văn Nhớ", "0962387053");
                         databaseHelper.insertUser(user1);
 
                     } else {

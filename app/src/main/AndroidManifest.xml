@@ -48,7 +48,8 @@
         <activity android:name=".ui.BillActivity" />
         <activity android:name=".ui.AddBillActivity" />
         <activity android:name=".ui.TopBookActivity" />
-        <activity android:name=".ui.StatisticsActivity"></activity>
+        <activity android:name=".ui.StatisticsActivity" />
+        <activity android:name=".ui.EditUserActivity"></activity>
     </application>
 
 </manifest>

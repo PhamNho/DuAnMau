@@ -55,21 +55,22 @@ public class AddUserActivity extends AppCompatActivity {
     public void addUser(View view) {
 
         String username=edtUserName.getText().toString().trim();
-        String password=edtPasswordInAddUser.getText().toString().trim();
-        String changepassword=edtChangePasswordInAddUser.getText().toString().trim();
+        String password=edtPasswordInAddUser.getText().toString();
+        String changepassword=edtChangePasswordInAddUser.getText().toString();
         String phonenumber=edtPhoneNumberInAddUser.getText().toString().trim();
         String name=edtName.getText().toString().trim();
 
-        if (username.isEmpty()||password.isEmpty()||changepassword.isEmpty()||phonenumber.isEmpty()||name.isEmpty()){
+        if (username.isEmpty()||password.isEmpty()||changepassword.isEmpty()||phonenumber.isEmpty()||name.isEmpty()||!password.equals(changepassword)){
             if (username.isEmpty())edtUserName.setError(getString(R.string.notify_empty_user_name));
             if (password.isEmpty())edtPasswordInAddUser.setError(getString(R.string.notify_empty_pass_word));
             if (changepassword.isEmpty())edtChangePasswordInAddUser.setError(getString(R.string.notify_empty_pass_word));
-            if (password!=changepassword)edtChangePasswordInAddUser.setError("Mật khẩu không khớp !");
+            if (!password.equals(changepassword))edtChangePasswordInAddUser.setError("Mật khẩu không trùng khớp !");
             if (phonenumber.isEmpty())edtPhoneNumberInAddUser.setError(getString(R.string.notify_empty_pass_word));
             if (name.isEmpty())edtName.setError(getString(R.string.notify_empty_pass_word));
         }else {
             Users users=new Users(username,password,name,phonenumber);
             databaseHelper.insertUser(users);
+            finish();
             Toast.makeText(this, "Đã thêm", Toast.LENGTH_SHORT).show();
         }
 
