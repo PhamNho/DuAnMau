@@ -6,29 +6,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.nho_pc.nhopvph06243_ass.Constant;
+import com.nho_pc.nhopvph06243_ass.listener.Constant;
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
 import com.nho_pc.nhopvph06243_ass.model.Users;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO extends DatabaseHelper{
+public class UserDAO implements  Constant{
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
     public static final String TABLE_NAME = "Users";
     public static final String SQL_USER = "CREATE TABLE Users(username text primary key, password text, name text, phonenumber text);";
     public static final String TAG = "UserDAO";
 
-    public final static String USER_TABLE = "users";
-    public final static String COLUMN_USERNAME = "Username";
-    public final static String COLUMN_PASSWORD = "Password";
-    public final static String COLUMN_NAME = "Name";
-    public final static String COLUMN_PHONE_NUMBER = "Phone_number";
-
-
     public UserDAO(Context context) {
-    super(context);
         dbHelper = new DatabaseHelper(context);
         db = dbHelper.getWritableDatabase();
     }
@@ -55,8 +47,6 @@ public class UserDAO extends DatabaseHelper{
     public Users getUser(String username) {
 
         Users users = null;
-
-        SQLiteDatabase db = this.getReadableDatabase();
 
         // Truyen vao Ten bang, array bao gom ten cot, ten cot khoa chinh, gia tri khoa chinh, cac tham so con lai la null
 
@@ -105,10 +95,10 @@ public class UserDAO extends DatabaseHelper{
     //update
     public int updateUsers(Users users) {
         ContentValues values = new ContentValues();
-        values.put("username", users.getUserName());
-        values.put("password", users.getPassword());
-        values.put("name", users.getName());
-        values.put("phonenumber", users.getPhoneNumber());
+        values.put(COLUMN_USERNAME, users.getUserName());
+        values.put(COLUMN_PASSWORD, users.getPassword());
+        values.put(COLUMN_NAME, users.getName());
+        values.put(COLUMN_PHONE_NUMBER, users.getPhoneNumber());
         int result = db.update(TABLE_NAME, values, "username=?", new String[]{users.getUserName()});
         if (result == 0) {
             return -1;
@@ -129,8 +119,8 @@ public class UserDAO extends DatabaseHelper{
 
     public int updateInfoUsers(String username, String name, String phone) {
         ContentValues values = new ContentValues();
-        values.put("name", name);
-        values.put("phonenumber", phone);
+        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_PHONE_NUMBER, phone);
         int result = db.update(TABLE_NAME, values, "username=?", new String[]{username});
         if (result == 0) {
             return -1;

@@ -5,22 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.nho_pc.nhopvph06243_ass.Constant;
+import com.nho_pc.nhopvph06243_ass.listener.Constant;
 
-import static com.nho_pc.nhopvph06243_ass.dao.UserDAO.COLUMN_NAME;
-import static com.nho_pc.nhopvph06243_ass.dao.UserDAO.COLUMN_PASSWORD;
-import static com.nho_pc.nhopvph06243_ass.dao.UserDAO.COLUMN_PHONE_NUMBER;
-import static com.nho_pc.nhopvph06243_ass.dao.UserDAO.COLUMN_USERNAME;
-import static com.nho_pc.nhopvph06243_ass.dao.UserDAO.USER_TABLE;
-
-public class DatabaseHelper extends SQLiteOpenHelper {
-
-    public final static String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE + "(" +
-            COLUMN_USERNAME + " VARCHAR PRIMARY KEY," +
-            COLUMN_PASSWORD + " VARCHAR," +
-            COLUMN_NAME + " VARCHAR," +
-            COLUMN_PHONE_NUMBER + " VARCHAR" +
-            ")";
+public class DatabaseHelper extends SQLiteOpenHelper implements Constant{
 
     public DatabaseHelper(Context context) {
         super(context, "BookManager", null, 1);
