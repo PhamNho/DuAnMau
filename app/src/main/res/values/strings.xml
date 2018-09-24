@@ -9,4 +9,5 @@
     <string name="notify_empty_user">UserName không được để trống !</string>
     <string name="notify_length_pass">Password phải lớn hơn 6 ký tự !</string>
     <string name="notify_empty_pass">Password không được để trống !</string>
+    <string name="title_add_user">Thêm người dùng</string>
 </resources>

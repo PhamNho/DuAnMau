@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
+import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
 import com.nho_pc.nhopvph06243_ass.model.Users;
 
@@ -19,14 +20,14 @@ public class AddUserActivity extends AppCompatActivity {
     private EditText edtChangePasswordInAddUser;
     private EditText edtPhoneNumberInAddUser;
     private EditText edtName;
-
-    private DatabaseHelper databaseHelper;
+    private UserDAO userDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
-        setTitle("Thêm người dùng");
+        setTitle(getString(R.string.title_add_user));
+        userDAO=new UserDAO(getApplicationContext());
         initViews();
         setSupportActionBar(customtoolbarAddUser);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -48,8 +49,6 @@ public class AddUserActivity extends AppCompatActivity {
         edtPhoneNumberInAddUser = (EditText) findViewById(R.id.edtPhoneNumberInAddUser);
         edtName = (EditText) findViewById(R.id.edtName);
 
-        databaseHelper=new DatabaseHelper(this);
-
     }
 
     public void addUser(View view) {
@@ -69,7 +68,7 @@ public class AddUserActivity extends AppCompatActivity {
             if (name.isEmpty())edtName.setError(getString(R.string.notify_empty_pass_word));
         }else {
             Users users=new Users(username,password,name,phonenumber);
-            databaseHelper.insertUser(users);
+            userDAO.insertUser(users);
             finish();
             Toast.makeText(this, "Đã thêm", Toast.LENGTH_SHORT).show();
         }

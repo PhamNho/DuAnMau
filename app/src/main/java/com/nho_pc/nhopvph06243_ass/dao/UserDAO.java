@@ -6,39 +6,81 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.nho_pc.nhopvph06243_ass.Constant;
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
 import com.nho_pc.nhopvph06243_ass.model.Users;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserDAO extends DatabaseHelper{
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
     public static final String TABLE_NAME = "Users";
     public static final String SQL_USER = "CREATE TABLE Users(username text primary key, password text, name text, phonenumber text);";
     public static final String TAG = "UserDAO";
 
+    public final static String USER_TABLE = "users";
+    public final static String COLUMN_USERNAME = "Username";
+    public final static String COLUMN_PASSWORD = "Password";
+    public final static String COLUMN_NAME = "Name";
+    public final static String COLUMN_PHONE_NUMBER = "Phone_number";
+
+
     public UserDAO(Context context) {
+    super(context);
         dbHelper = new DatabaseHelper(context);
         db = dbHelper.getWritableDatabase();
     }
 
     //insert
-    public int inserUsers(Users users) {
-        ContentValues values = new ContentValues();
-        values.put("username", users.getUserName());
-        values.put("password", users.getPassword());
-        values.put("name", users.getName());
-        values.put("phonenumber", users.getPhoneNumber());
-        try {
-            if (db.insert(TABLE_NAME, null, values) == -1) {
-                return -1;
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, ex.toString());
+    public void insertUser(Users user) {
+
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_USERNAME, user.getUserName());
+        contentValues.put(COLUMN_PASSWORD, user.getPassword());
+        contentValues.put(COLUMN_NAME, user.getName());
+        contentValues.put(COLUMN_PHONE_NUMBER, user.getPhoneNumber());
+
+        long id = db.insert(USER_TABLE, null, contentValues);
+
+        if (Constant.isDEBUG) Log.e("insertUser", "insertUser ID : " + id);
+
+        db.close();
+
+    }
+    // getUser
+    public Users getUser(String username) {
+
+        Users users = null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Truyen vao Ten bang, array bao gom ten cot, ten cot khoa chinh, gia tri khoa chinh, cac tham so con lai la null
+
+        Cursor cursor = db.query(USER_TABLE, new String[]{COLUMN_USERNAME, COLUMN_PASSWORD, COLUMN_NAME, COLUMN_PHONE_NUMBER}, COLUMN_USERNAME + "=?", new String[]{username}, null, null, null, null);
+
+        // moveToFirst : kiem tra xem cursor co chua du lieu khong, ham nay tra ve gia tri la true or false
+        if (cursor != null && cursor.moveToFirst()) {
+
+            String user_name = cursor.getString(cursor.getColumnIndex(COLUMN_USERNAME));
+
+            String password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
+
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+
+            String phoneNumber = cursor.getString(cursor.getColumnIndex(COLUMN_PHONE_NUMBER));
+
+            // khoi tao user voi cac gia tri lay duoc
+            users = new Users(user_name, password, name, phoneNumber);
+
+
         }
-        return 1;
+        cursor.close();
+
+        return users;
     }
 
     //getAll

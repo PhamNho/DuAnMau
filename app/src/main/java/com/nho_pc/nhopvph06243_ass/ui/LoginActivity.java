@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
 
+import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
 import com.nho_pc.nhopvph06243_ass.model.Users;
 
@@ -28,40 +29,39 @@ public class LoginActivity extends AppCompatActivity {
     private String USERNAME_KEY = "user";
     private String PASSWORD_KEY = "password";
 
-    private DatabaseHelper databaseHelper;
+    private UserDAO userDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
-        databaseHelper = new DatabaseHelper(this);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = edtUser.getText().toString().trim();
-                String pass = edtPassword.getText().toString().trim();
-                if (pass.length() < 6 || user.isEmpty() || pass.isEmpty()) {
+                String userName = edtUser.getText().toString().trim();
+                String password = edtPassword.getText().toString().trim();
+                if (password.length() < 6 || userName.isEmpty() || password.isEmpty()) {
 
-                    if (user.isEmpty()) edtUser.setError(getString(R.string.notify_empty_user));
+                    if (userName.isEmpty()) edtUser.setError(getString(R.string.notify_empty_user));
 
-                    if (pass.length() < 6) edtPassword.setError(getString(R.string.notify_length_pass));
+                    if (password.length() < 6) edtPassword.setError(getString(R.string.notify_length_pass));
 
-                    if (pass.isEmpty()) edtPassword.setError(getString(R.string.notify_empty_pass));
+                    if (password.isEmpty()) edtPassword.setError(getString(R.string.notify_empty_pass));
 
                 } else {
 
                     // kiem tra user da ton tai trong DB chua !!!
-                    Users user2;
+                    Users user;
 
-                    user2 = databaseHelper.getUser(edtUser.getText().toString());
+                    user = userDAO.getUser(edtUser.getText().toString());
 
-                    if (user2 == null) {
+                    if (user == null) {
                         Toast.makeText(getApplicationContext(), "User chưa tồn tại !!!", Toast.LENGTH_LONG).show();
                         Users user1 = new Users("admin", "admin123", "Phạm Văn Nhớ", "0962387053");
-                        databaseHelper.insertUser(user1);
+                        userDAO.insertUser(user1);
 
                     } else {
                         if (cbRemember.isChecked()) {
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.commit();
                         }
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                        Toast.makeText(getApplicationContext(), "Xin chào : "+user2.getName(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Xin chào : "+user.getName(), Toast.LENGTH_LONG).show();
                     }
 
 //                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
@@ -101,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        userDAO=new UserDAO(getApplicationContext());
         edtUser = (EditText) findViewById(R.id.edtUser);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         cbRemember = (CheckBox) findViewById(R.id.cbRemember);

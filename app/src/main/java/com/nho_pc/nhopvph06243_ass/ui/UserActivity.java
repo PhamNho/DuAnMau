@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.nho_pc.nhopvph06243_ass.R;
 import com.nho_pc.nhopvph06243_ass.adapter.UserAdapter;
 import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
+import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
 import com.nho_pc.nhopvph06243_ass.model.Users;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
       private Toolbar customtoolbarUser;
+      private DatabaseHelper databaseHelper;
 //    private UserAdapter adapter;
 //    private UserDAO userDAO;
 //    private List<Users> usersList;
@@ -59,8 +61,8 @@ public class UserActivity extends AppCompatActivity {
         });
 
         lvNguoiDung = (ListView) findViewById(R.id.lvUser);
-        userDAO = new UserDAO(UserActivity.this);
-        usersList = userDAO.getAllUsers();
+        userDAO=new UserDAO(UserActivity.this);
+        usersList=userDAO.getAllUsers();
         adapter = new UserAdapter(this, usersList);
         lvNguoiDung.setAdapter(adapter);
 //        lvNguoiDung.setOnItemClickListener(new AdapterView.OnItemClickListener() {
