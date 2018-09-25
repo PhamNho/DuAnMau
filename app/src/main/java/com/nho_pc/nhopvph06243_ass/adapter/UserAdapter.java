@@ -101,6 +101,9 @@ public class UserAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (usersList==null){
+            return 0;
+        }
         return usersList.size();
     }
 
