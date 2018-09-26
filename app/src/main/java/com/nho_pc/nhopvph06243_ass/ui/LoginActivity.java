@@ -14,9 +14,13 @@ import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
 
+import com.nho_pc.nhopvph06243_ass.adapter.UserAdapter;
 import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
 import com.nho_pc.nhopvph06243_ass.model.Users;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText edtUser;
@@ -30,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private String PASSWORD_KEY = "password";
 
     private UserDAO userDAO;
+    private List<Users> usersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +59,16 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
 
                     // kiem tra user da ton tai trong DB chua !!!
-                    Users user;
-
-                    user = userDAO.getUser(edtUser.getText().toString());
+                    Users user = userDAO.getUser(edtUser.getText().toString().trim());
 
                     if (user == null) {
                         Toast.makeText(getApplicationContext(), "User chưa tồn tại !!!", Toast.LENGTH_LONG).show();
                         Users user1 = new Users("admin", "admin123", "Phạm Văn Nhớ", "0962387053");
                         userDAO.insertUser(user1);
-
                     } else {
                         if (cbRemember.isChecked()) {
-                            editor = sharedPreferences.edit();
+                            SharedPreferences preferences=getSharedPreferences("USER_FILE",MODE_PRIVATE);
+                            editor = preferences.edit();
                             editor.putString(USERNAME_KEY, edtUser.getText().toString().trim());
                             editor.putString(PASSWORD_KEY, edtPassword.getText().toString().trim());
                             editor.commit();
@@ -101,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        usersList=new ArrayList<>();
         userDAO=new UserDAO(getApplicationContext());
         edtUser = (EditText) findViewById(R.id.edtUser);
         edtPassword = (EditText) findViewById(R.id.edtPassword);

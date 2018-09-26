@@ -47,7 +47,6 @@ public class UserActivity extends AppCompatActivity {
 
         adapter=new UserAdapter(this,usersList);
 
-
         setSupportActionBar(customtoolbarUser);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -60,27 +59,28 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        lvNguoiDung = (ListView) findViewById(R.id.lvUser);
+        lvNguoiDung = findViewById(R.id.lvUser);
         userDAO=new UserDAO(UserActivity.this);
         usersList=userDAO.getAllUsers();
+
         adapter = new UserAdapter(this, usersList);
         lvNguoiDung.setAdapter(adapter);
-//        lvNguoiDung.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position,
-//                                    long id) {
-//                Intent intent = new Intent(UserActivity.this, NguoiDungDetailActivity.class);
-//                Bundle b = new Bundle();
-//                b.putString("USERNAME", usersList.get(position).getUserName());
-//                b.putString("PHONE", usersList.get(position).getPhoneNumber());
-//                intent.putExtras(b);
-//                startActivity(intent);
-//            }
-//        });
+        lvNguoiDung.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(UserActivity.this,usersList.get(position).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
         lvNguoiDung.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(UserActivity.this,usersList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UserActivity.this, EditUserActivity.class);
+                Bundle b = new Bundle();
+                b.putString("USERNAME", usersList.get(position).getUserName().trim());
+                b.putString("NAME", usersList.get(position).getName());
+                b.putString("PHONE", usersList.get(position).getPhoneNumber());
+                intent.putExtras(b);
+                startActivity(intent);
                 return false;
             }
         });

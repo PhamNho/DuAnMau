@@ -101,7 +101,7 @@ public class UserAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (usersList==null){
+        if (usersList == null) {
             return 0;
         }
         return usersList.size();
@@ -121,7 +121,7 @@ public class UserAdapter extends BaseAdapter {
         ImageView img;
         TextView txtName;
         TextView txtPhone;
-        ImageView imgEdit;
+//        ImageView imgEdit;
         ImageView imgDelete;
 
     }
@@ -136,7 +136,7 @@ public class UserAdapter extends BaseAdapter {
             holder.txtName = (TextView) convertView.findViewById(R.id.tvName);
             holder.txtPhone = (TextView) convertView.findViewById(R.id.tvPhoneNumber);
             holder.imgDelete = (ImageView) convertView.findViewById(R.id.imgDeleteUser);
-            holder.imgEdit = (ImageView) convertView.findViewById(R.id.imgEditUser);
+//            holder.imgEdit = (ImageView) convertView.findViewById(R.id.imgEditUser);
             holder.imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -145,7 +145,7 @@ public class UserAdapter extends BaseAdapter {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     //B2: thiết lập thông tin
                     builder.setTitle("Thông báo");
-                    builder.setMessage("Bạn có muốn xóa "+usersList.get(position).getName()+" ?");
+                    builder.setMessage("Bạn có muốn xóa " + usersList.get(position).getName() + " ?");
                     builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -164,12 +164,12 @@ public class UserAdapter extends BaseAdapter {
                     builder.show();
                 }
             });
-            holder.imgEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent=new Intent(context, EditUserActivity.class);
-                }
-            });
+//            holder.imgEdit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    v.getContext().startActivity(new Intent(context, EditUserActivity.class));
+//                }
+//            });
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();

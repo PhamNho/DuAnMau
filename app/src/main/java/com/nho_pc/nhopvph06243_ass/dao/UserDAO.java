@@ -106,11 +106,10 @@ public class UserDAO implements  Constant{
         return 1;
     }
 
-    public int changePasswordUsers(Users users) {
+    public int changePasswordUsers(String user,String password) {
         ContentValues values = new ContentValues();
-        values.put("username", users.getUserName());
-        values.put("password", users.getPassword());
-        int result = db.update(TABLE_NAME, values, "username=?", new String[]{users.getUserName()});
+        values.put(COLUMN_PASSWORD,password);
+        int result = db.update(TABLE_NAME, values, "username=?", new String[]{user});
         if (result == 0) {
             return -1;
         }
@@ -119,6 +118,7 @@ public class UserDAO implements  Constant{
 
     public int updateInfoUsers(String username, String name, String phone) {
         ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, username);
         values.put(COLUMN_NAME, name);
         values.put(COLUMN_PHONE_NUMBER, phone);
         int result = db.update(TABLE_NAME, values, "username=?", new String[]{username});
@@ -130,13 +130,6 @@ public class UserDAO implements  Constant{
     //delete
     public int deleteUsersByID(String username){
         int result = db.delete(TABLE_NAME,"username=?",new String[]{username});
-        if (result == 0)
-            return -1;
-        return 1;
-    }
-    //check login
-    public int checkLogin(String username, String password){
-        int result = db.delete(TABLE_NAME,"username=? AND password=?",new String[]{username,password});
         if (result == 0)
             return -1;
         return 1;
