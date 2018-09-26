@@ -3,6 +3,7 @@ package com.nho_pc.nhopvph06243_ass.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -116,7 +117,12 @@ public class UserActivity extends AppCompatActivity {
                     builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            SharedPreferences pref = getSharedPreferences("USER_FILE",MODE_PRIVATE);
+                            SharedPreferences.Editor edit = pref.edit();
+                            //xoa tinh trang luu tru truoc do
+                            edit.clear();
+                            edit.commit();
+                            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
                             finish();
                             Toast.makeText(UserActivity.this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
                         }

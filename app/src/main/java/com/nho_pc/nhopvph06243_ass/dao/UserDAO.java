@@ -18,7 +18,6 @@ public class UserDAO implements  Constant{
     private DatabaseHelper dbHelper;
     public static final String TABLE_NAME = "Users";
     public static final String SQL_USER = "CREATE TABLE Users(username text primary key, password text, name text, phonenumber text);";
-    public static final String TAG = "UserDAO";
 
     public UserDAO(Context context) {
         dbHelper = new DatabaseHelper(context);
@@ -36,7 +35,7 @@ public class UserDAO implements  Constant{
         contentValues.put(COLUMN_NAME, user.getName());
         contentValues.put(COLUMN_PHONE_NUMBER, user.getPhoneNumber());
 
-        long id = db.insert(USER_TABLE, null, contentValues);
+        long id = db.insert(TABLE_NAME, null, contentValues);
 
         if (Constant.isDEBUG) Log.e("insertUser", "insertUser ID : " + id);
 
@@ -44,13 +43,22 @@ public class UserDAO implements  Constant{
 
     }
     // getUser
-    public Users getUser(String username) {
+    public Users getUser(String username, String password1) {
 
         Users users = null;
 
         // Truyen vao Ten bang, array bao gom ten cot, ten cot khoa chinh, gia tri khoa chinh, cac tham so con lai la null
 
-        Cursor cursor = db.query(USER_TABLE, new String[]{COLUMN_USERNAME, COLUMN_PASSWORD, COLUMN_NAME, COLUMN_PHONE_NUMBER}, COLUMN_USERNAME + "=?", new String[]{username}, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, new String[]{
+                COLUMN_USERNAME,
+                COLUMN_PASSWORD,
+                COLUMN_NAME,
+                COLUMN_PHONE_NUMBER},
+                "username=? AND password=?", new String[]{username,password1},
+                null,
+                null,
+                null,
+                null);
 
         // moveToFirst : kiem tra xem cursor co chua du lieu khong, ham nay tra ve gia tri la true or false
         if (cursor != null && cursor.moveToFirst()) {
@@ -106,11 +114,12 @@ public class UserDAO implements  Constant{
         return 1;
     }
 
-    public int changePasswordUsers(String user,String password) {
+    public int changePasswordUsers(Users users){
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PASSWORD,password);
-        int result = db.update(TABLE_NAME, values, "username=?", new String[]{user});
-        if (result == 0) {
+        values.put(COLUMN_USERNAME,users.getUserName());
+        values.put(COLUMN_PASSWORD,users.getPassword());
+        int result = db.update(TABLE_NAME,values,"username=?", new String[]{users.getUserName()});
+        if (result == 0){
             return -1;
         }
         return 1;
@@ -130,6 +139,13 @@ public class UserDAO implements  Constant{
     //delete
     public int deleteUsersByID(String username){
         int result = db.delete(TABLE_NAME,"username=?",new String[]{username});
+        if (result == 0)
+            return -1;
+        return 1;
+    }
+    //check login
+    public int checkLogin(String username, String password){
+        int result = db.delete(TABLE_NAME,"username=? AND password=?",new String[]{username,password});
         if (result == 0)
             return -1;
         return 1;

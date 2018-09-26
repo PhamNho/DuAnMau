@@ -19,6 +19,10 @@ public class Book {
         this.soLuong = soLuong;
     }
 
+    public Book() {
+
+    }
+
     public String getMaSach() {
         return maSach;
     }

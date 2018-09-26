@@ -6,6 +6,10 @@ public class Bill {
     private String maHoaDon;
     private Date ngayMua;
 
+    public Bill() {
+
+    }
+
     public String getMaHoaDon() {
         return maHoaDon;
     }

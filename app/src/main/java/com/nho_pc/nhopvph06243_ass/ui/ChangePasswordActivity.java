@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,8 +16,8 @@ import com.nho_pc.nhopvph06243_ass.model.Users;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     private Toolbar customtoolbarChangePassword;
-    private EditText edtNewPassword;
-    private EditText edtNewPassword2;
+    private EditText edtPass;
+    private EditText edtRePass;
     SharedPreferences preferences;
     String strUserName,strPassword;
     private String USERNAME_KEY = "user";
@@ -50,37 +51,42 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        edtNewPassword = (EditText) findViewById(R.id.edtNewPassword);
-        edtNewPassword2 = (EditText) findViewById(R.id.edtNewPassword2);
+        edtPass = findViewById(R.id.edtNewPassword);
+        edtRePass = findViewById(R.id.edtNewPassword2);
     }
 
-    public void changePassword(View view) {
-        String newPassword = edtNewPassword.getText().toString().trim();
-        String newPassword2 = edtNewPassword2.getText().toString().trim();
-        if (newPassword.isEmpty() || newPassword2.isEmpty()) {
-            if (newPassword.isEmpty()) {
-                edtNewPassword.setError(getText(R.string.notify_empty_pass_word));
-            }
-            if (newPassword2.isEmpty()) {
-                edtNewPassword2.setError(getText(R.string.notify_empty_pass_word));
-            }
-        } else if (newPassword.length() < 6 || newPassword2.length() < 6) {
-
-            if (newPassword.length() < 6) {
-                edtNewPassword.setError(getText(R.string.notify_length_pass));
-            }
-            if (newPassword2.length() < 6) {
-                edtNewPassword2.setError(getText(R.string.notify_length_pass));
-            }
-        }else if (!newPassword.equals(newPassword2)){
-            edtNewPassword2.setError(getString(R.string.notify_pass_khong_khop));
+    public int validateForm(){
+        int check = 1;
+        if (edtPass.getText().length()==0 || edtRePass.getText().length() == 0) {
+            if (edtPass.getText().length()==0 )edtPass.setError(getText(R.string.notify_empty_pass));
+            if (edtRePass.getText().length()==0 )edtRePass.setError(getText(R.string.notify_empty_pass));
+            check = -1;
         }else {
-            int result=userDAO.changePasswordUsers(strUserName,newPassword2);
-            if (result==1){
-                Toast.makeText(this, getString(R.string.doi_pass)+" "+strUserName, Toast.LENGTH_SHORT).show();
-            }else if (result==-1){
-                Toast.makeText(this, getString(R.string.doi_passtb), Toast.LENGTH_SHORT).show();
+            String pass = edtPass.getText().toString();
+            String rePass = edtRePass.getText().toString();
+            if (!pass.equals(rePass)) {
+                Toast.makeText(getApplicationContext(), "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
+                check = -1;
             }
+        }
+        return check;
+    }
+    public void changePassword(View view) {
+        SharedPreferences pref = getSharedPreferences("USER_FILE",MODE_PRIVATE);
+        String strUserName = pref.getString("USERNAME","");
+        userDAO = new UserDAO(ChangePasswordActivity.this);
+        Users user = new Users(strUserName, edtPass.getText().toString(), "", "");
+        try {
+            if (validateForm()>0){
+                if (userDAO.changePasswordUsers(user) > 0) {
+                    Toast.makeText(getApplicationContext(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Lưu thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+            finish();
+        } catch (Exception ex) {
+            Log.e("Error", ex.toString());
         }
     }
 

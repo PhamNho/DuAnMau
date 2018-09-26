@@ -5,10 +5,10 @@ public interface Constant {
 
     // TABLE USER
     String USER_TABLE = "users";
-    String COLUMN_USERNAME = "Username";
-    String COLUMN_PASSWORD = "Password";
-    String COLUMN_NAME = "Name";
-    String COLUMN_PHONE_NUMBER = "Phone_number";
+    String COLUMN_USERNAME = "username";
+    String COLUMN_PASSWORD = "password";
+    String COLUMN_NAME = "name";
+    String COLUMN_PHONE_NUMBER = "phonenumber";
 
     String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE + "(" +
             COLUMN_USERNAME + " VARCHAR PRIMARY KEY," +

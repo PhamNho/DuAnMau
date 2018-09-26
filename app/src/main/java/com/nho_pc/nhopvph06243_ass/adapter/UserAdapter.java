@@ -121,7 +121,6 @@ public class UserAdapter extends BaseAdapter {
         ImageView img;
         TextView txtName;
         TextView txtPhone;
-//        ImageView imgEdit;
         ImageView imgDelete;
 
     }
@@ -136,11 +135,9 @@ public class UserAdapter extends BaseAdapter {
             holder.txtName = (TextView) convertView.findViewById(R.id.tvName);
             holder.txtPhone = (TextView) convertView.findViewById(R.id.tvPhoneNumber);
             holder.imgDelete = (ImageView) convertView.findViewById(R.id.imgDeleteUser);
-//            holder.imgEdit = (ImageView) convertView.findViewById(R.id.imgEditUser);
             holder.imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     //B1: định nghĩa alertDialog
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     //B2: thiết lập thông tin

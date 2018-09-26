@@ -5,24 +5,33 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.nho_pc.nhopvph06243_ass.dao.BillDAO;
+import com.nho_pc.nhopvph06243_ass.dao.BookDAO;
+import com.nho_pc.nhopvph06243_ass.dao.BookTypeDAO;
+import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
 import com.nho_pc.nhopvph06243_ass.listener.Constant;
+import com.nho_pc.nhopvph06243_ass.model.Book;
 
 public class DatabaseHelper extends SQLiteOpenHelper implements Constant{
 
+    public static final String DATABASE_NAME = "dbBookManager";
+    public static final int VERSION = 1;
     public DatabaseHelper(Context context) {
-        super(context, "BookManager", null, 1);
+        super(context, DATABASE_NAME, null, VERSION);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // create User Table
-        db.execSQL(CREATE_USER_TABLE);
-        if (Constant.isDEBUG) Log.e("CREATE_USER_TABLE", CREATE_USER_TABLE);
+        db.execSQL(UserDAO.SQL_USER);
+        db.execSQL(BookTypeDAO.SQL_BOOK_TYPE);
+        db.execSQL(BookDAO.SQL_BOOK);
+        db.execSQL(BillDAO.SQL_Bill);
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
+        db.execSQL("Drop table if exists "+UserDAO.TABLE_NAME);
+        db.execSQL("Drop table if exists "+BookTypeDAO.TABLE_NAME);
+        db.execSQL("Drop table if exists "+BookDAO.TABLE_NAME);
+        db.execSQL("Drop table if exists "+BillDAO.TABLE_NAME);
         onCreate(db);
     }
 }

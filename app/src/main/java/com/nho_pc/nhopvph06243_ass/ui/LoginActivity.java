@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,13 +29,11 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox cbRemember;
     private Button btnLogin;
 
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     private String USERNAME_KEY = "user";
     private String PASSWORD_KEY = "password";
 
     private UserDAO userDAO;
-    private List<Users> usersList;
+    private String strUser, strPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,76 +41,120 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initViews();
 
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String userName = edtUser.getText().toString().trim();
+//                String password = edtPassword.getText().toString().trim();
+//                if (password.length() < 6 || userName.isEmpty() || password.isEmpty()) {
+//
+//                    if (userName.isEmpty()) edtUser.setError(getString(R.string.notify_empty_user));
+//
+//                    if (password.length() < 6)
+//                        edtPassword.setError(getString(R.string.notify_length_pass));
+//
+//                    if (password.isEmpty())
+//                        edtPassword.setError(getString(R.string.notify_empty_pass));
+//
+//                } else {
+//
+//                    // kiem tra user da ton tai trong DB chua !!!
+//                    Users user = userDAO.getUser(edtUser.getText().toString().trim());
+//                    if (user == null) {
+//                        Toast.makeText(getApplicationContext(), "User chưa tồn tại !!!", Toast.LENGTH_LONG).show();
+//                        Users user1 = new Users("admin", "admin123", "Phạm Văn Nhớ", "0962387053");
+//                        userDAO.insertUser(user1);
+//                    } else {
+//                        if (cbRemember.isChecked()) {
+//                            editor = sharedPreferences.edit();
+//                            editor.putString(USERNAME_KEY, edtUser.getText().toString().trim());
+//                            editor.putString(PASSWORD_KEY, edtPassword.getText().toString().trim());
+//                            editor.commit();
+//                        }
+//                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                        Toast.makeText(getApplicationContext(), "Xin chào : " + user.getName(), Toast.LENGTH_LONG).show();
+//                    }
+//
+//
+////                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+////                    final int[] a = {0};
+////
+////                    progressDialog.setTitle("Đang đăng nhập");
+////                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+////
+////
+////                    CountDownTimer countDownTimer = new CountDownTimer(1500, 40) {
+////                        @Override
+////                        public void onTick(long millisUntilFinished) {
+////                            a[0] = a[0] + 4;
+////                            progressDialog.show();
+////                            progressDialog.setProgress(a[0]);
+////                        }
+////
+////                        @Override
+////                        public void onFinish() {
+////                            progressDialog.dismiss();
+////                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+////                        }
+////                    }.start();
+//                }
+//
+//            }
+//        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = edtUser.getText().toString().trim();
-                String password = edtPassword.getText().toString().trim();
-                if (password.length() < 6 || userName.isEmpty() || password.isEmpty()) {
+                SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                strUser = edtUser.getText().toString().trim();
+                strPass = edtPassword.getText().toString().trim();
+                if (strPass.length() < 6 || strUser.isEmpty() || strPass.isEmpty()) {
 
-                    if (userName.isEmpty()) edtUser.setError(getString(R.string.notify_empty_user));
+                    if (strUser.isEmpty()) edtUser.setError(getString(R.string.notify_empty_user));
 
-                    if (password.length() < 6) edtPassword.setError(getString(R.string.notify_length_pass));
+                    if (strPass.length() < 6)
+                        edtPassword.setError(getString(R.string.notify_length_pass));
 
-                    if (password.isEmpty()) edtPassword.setError(getString(R.string.notify_empty_pass));
+                    if (strPass.isEmpty())
+                        edtPassword.setError(getString(R.string.notify_empty_pass));
 
                 } else {
-
-                    // kiem tra user da ton tai trong DB chua !!!
-                    Users user = userDAO.getUser(edtUser.getText().toString().trim());
-
+//                  kiem tra user da ton tai trong DB chua !!!
+                    Users user = userDAO.getUser(strUser,strPass);
                     if (user == null) {
                         Toast.makeText(getApplicationContext(), "User chưa tồn tại !!!", Toast.LENGTH_LONG).show();
                         Users user1 = new Users("admin", "admin123", "Phạm Văn Nhớ", "0962387053");
                         userDAO.insertUser(user1);
                     } else {
                         if (cbRemember.isChecked()) {
-                            SharedPreferences preferences=getSharedPreferences("USER_FILE",MODE_PRIVATE);
-                            editor = preferences.edit();
-                            editor.putString(USERNAME_KEY, edtUser.getText().toString().trim());
-                            editor.putString(PASSWORD_KEY, edtPassword.getText().toString().trim());
-                            editor.commit();
+                            // lưu dữ liệu
+                            edit.putString("USERNAME", strUser);
+                            edit.putString("PASSWORD", strPass);
+                            edit.commit();
+                        }
+                        else {
+                            // xóa tính trạng lữu trữ trước đó
+                            edit.clear();
+                            edit.commit();
                         }
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                        Toast.makeText(getApplicationContext(), "Xin chào : "+user.getName(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Xin chào : " + user.getName(), Toast.LENGTH_LONG).show();
                     }
-
-//                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-//                    final int[] a = {0};
-//
-//                    progressDialog.setTitle("Đang đăng nhập");
-//                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//
-//
-//                    CountDownTimer countDownTimer = new CountDownTimer(1500, 40) {
-//                        @Override
-//                        public void onTick(long millisUntilFinished) {
-//                            a[0] = a[0] + 4;
-//                            progressDialog.show();
-//                            progressDialog.setProgress(a[0]);
-//                        }
-//
-//                        @Override
-//                        public void onFinish() {
-//                            progressDialog.dismiss();
-//                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                        }
-//                    }.start();
                 }
             }
         });
     }
 
     private void initViews() {
-        usersList=new ArrayList<>();
-        userDAO=new UserDAO(getApplicationContext());
-        edtUser = (EditText) findViewById(R.id.edtUser);
-        edtPassword = (EditText) findViewById(R.id.edtPassword);
-        cbRemember = (CheckBox) findViewById(R.id.cbRemember);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        sharedPreferences = getSharedPreferences("Input", MODE_PRIVATE);
-        edtUser.setText(sharedPreferences.getString(USERNAME_KEY, ""));
-        edtPassword.setText(sharedPreferences.getString(PASSWORD_KEY, ""));
+        userDAO = new UserDAO(getApplicationContext());
+        edtUser = findViewById(R.id.edtUser);
+        edtPassword = findViewById(R.id.edtPassword);
+        cbRemember = findViewById(R.id.cbRemember);
+        btnLogin = findViewById(R.id.btnLogin);
+    }
+
+    public void huyLogin(View view) {
+        finish();
     }
 }

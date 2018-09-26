@@ -16,7 +16,7 @@ public class BookTypeDAO {
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
     public static final String TABLE_NAME = "TheLoai";
-    public static final String SQL_THE_LOAI ="CREATE TABLE TheLoai (matheloai text primary key, tentheloai text, mota text, vitri int);";
+    public static final String SQL_BOOK_TYPE ="CREATE TABLE TheLoai (matheloai text primary key, tentheloai text, mota text, vitri int);";
     public static final String TAG = "TheLoaiDAO";
 
     public BookTypeDAO(Context context){
