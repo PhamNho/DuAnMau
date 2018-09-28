@@ -1,54 +1,51 @@
 package com.nho_pc.nhopvph06243_ass.model;
 
 public class BookType {
-    private String maTheLoai;
-    private String tenTheLoai;
-    private String moTa;
-    private int viTri;
+    private String typeID;
+    private String typeName;
+    private String Description;
+    private int position;
 
-    public BookType(String maTheLoai, String tenTheLoai, String moTa, int viTri) {
-        this.maTheLoai = maTheLoai;
-        this.tenTheLoai = tenTheLoai;
-        this.moTa = moTa;
-        this.viTri = viTri;
+    public BookType(String typeID, String typeName, String description, int position) {
+        this.typeID = typeID;
+        this.typeName = typeName;
+        Description = description;
+        this.position = position;
     }
 
-    public BookType() {
+    public BookType(){
+
     }
 
-    public String getMaTheLoai() {
-        return maTheLoai;
+    public String getTypeID() {
+        return typeID;
     }
 
-    public void setMaTheLoai(String maTheLoai) {
-        this.maTheLoai = maTheLoai;
+    public void setTypeID(String typeCode) {
+        this.typeID = typeCode;
     }
 
-    public String getTenTheLoai() {
-        return tenTheLoai;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setTenTheLoai(String tenTheLoai) {
-        this.tenTheLoai = tenTheLoai;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
-    public String getMoTa() {
-        return moTa;
+    public String getDescription() {
+        return Description;
     }
 
-    public void setMoTa(String moTa) {
-        this.moTa = moTa;
+    public void setDescription(String description) {
+        Description = description;
     }
 
-    public int getViTri() {
-        return viTri;
+    public int getPosition() {
+        return position;
     }
 
-    public void setViTri(int viTri) {
-        this.viTri = viTri;
-    }
-    @Override
-    public String toString() {
-        return getMaTheLoai()+" | "+getTenTheLoai();
+    public void setPosition(int position) {
+        this.position = position;
     }
 }
