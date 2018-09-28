@@ -105,8 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
-                SharedPreferences.Editor edit = pref.edit();
+
                 strUser = edtUser.getText().toString().trim();
                 strPass = edtPassword.getText().toString().trim();
                 if (strPass.length() < 6 || strUser.isEmpty() || strPass.isEmpty()) {
@@ -121,12 +120,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
 //                  kiem tra user da ton tai trong DB chua !!!
-                    Users user = userDAO.getUser(strUser,strPass);
+                    Users user = userDAO.getUserByID(strUser,strPass);
                     if (user == null) {
                         Toast.makeText(getApplicationContext(), "User chưa tồn tại !!!", Toast.LENGTH_LONG).show();
                         Users user1 = new Users("admin", "admin123", "Phạm Văn Nhớ", "0962387053");
                         userDAO.insertUser(user1);
                     } else {
+                        SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+                        SharedPreferences.Editor edit = pref.edit();
                         if (cbRemember.isChecked()) {
                             // lưu dữ liệu
                             edit.putString("USERNAME", strUser);
