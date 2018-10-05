@@ -67,12 +67,11 @@ public interface Constant {
             ")";
 
     //===============
-//public static final String SQL_HOA_DON_CHI_TIET = "CREATE TABLE HoaDonChiTiet(maHDCT INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//        "maHoaDon text NOT NULL, maSach text NOT NULL, soLuong INTEGER);";
+
     // TABLE BILLDETAIL
-    String BILLDETAIL_TABLE = "billdetail";
-    String COLUMN_BILLDETAIL_ID = "billdetailID";
-    int COLUMN_SO_LUONG_MUA = 10;
+    String BILLDETAIL_TABLE = "HoaDonChiTiet";
+    String COLUMN_BILLDETAIL_ID = "maHDCT";
+    String COLUMN_SO_LUONG_MUA ="soLuongMua";
     String CREATE_BILLDETAIL_TABLE = "CREATE TABLE " + BILLDETAIL_TABLE + "(" +
             COLUMN_BILLDETAIL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             COLUMN_BILL_ID + " VARCHAR NOT NULL," +

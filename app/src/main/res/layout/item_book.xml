@@ -35,6 +35,13 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:text="Số lượng " />
+        <TextView
+            android:id="@+id/tvBookPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="20000" />
     </LinearLayout>
 
     <LinearLayout

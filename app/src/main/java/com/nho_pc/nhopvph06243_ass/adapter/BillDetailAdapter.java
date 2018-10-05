@@ -2,7 +2,9 @@ package com.nho_pc.nhopvph06243_ass.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +27,7 @@ public class BillDetailAdapter extends BaseAdapter {
         super();
         this.context = context;
         this.billDetailList = arrayHoaDonChiTiet;
-        this.inflater =
-                (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         billDetailDAO = new BillDetailDAO(context);
     }
     @Override
@@ -48,7 +49,6 @@ public class BillDetailAdapter extends BaseAdapter {
         TextView txtThanhTien;
         ImageView imgDelete;
     }
-    @SuppressLint("SetTextI18n")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -59,15 +59,32 @@ public class BillDetailAdapter extends BaseAdapter {
             holder.txtMaSach = (TextView) convertView.findViewById(R.id.tvMaSach);
             holder.txtSoLuong = (TextView) convertView.findViewById(R.id.tvSoLuong);
             holder.txtGiaBia = (TextView) convertView.findViewById(R.id.tvGiaBia);
-            holder.txtThanhTien = (TextView)
-                    convertView.findViewById(R.id.tvThanhTien);
+            holder.txtThanhTien = (TextView) convertView.findViewById(R.id.tvThanhTien);
             holder.imgDelete = (ImageView)convertView.findViewById(R.id.ivDelete);
             holder.imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    billDetailDAO.deleteHoaDonChiTietByID(String.valueOf(billDetailList.get(position).getbilldetailID()));
-                    billDetailList.remove(position);
-                    notifyDataSetChanged();
+                    //B1: định nghĩa alertDialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    //B2: thiết lập thông tin
+                    builder.setTitle("Thông báo");
+                    builder.setMessage("Bạn có muốn xóa " + billDetailList.get(position).getSach() + " ?");
+                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            billDetailDAO.deleteHoaDonChiTietByID(billDetailList.get(position).getbilldetailID());
+                            billDetailList.remove(position);
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    //B3: hiển thị
+                    builder.show();
                 }
             });
             convertView.setTag(holder);
@@ -77,8 +94,8 @@ public class BillDetailAdapter extends BaseAdapter {
         BillDetail _entry = (BillDetail) billDetailList.get(position);
         holder.txtMaSach.setText("Mã sách: "+_entry.getSach().getMaSach());
         holder.txtSoLuong.setText("Số lượng: "+_entry.getSoLuongMua());
-        holder.txtGiaBia.setText("Giá bìa: "+_entry.getSach().getGiaBia() +" vnd");
-        holder.txtThanhTien.setText("Thành tiền:"+_entry.getSoLuongMua()*_entry.getSach().getGiaBia()+" vnd");
+        holder.txtGiaBia.setText("Giá bìa: "+_entry.getSach().getGiaBia() +" vnđ");
+        holder.txtThanhTien.setText("Thành tiền:"+_entry.getSoLuongMua()*_entry.getSach().getGiaBia()+" vnđ");
         return convertView;
     }
     @Override

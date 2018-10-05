@@ -24,14 +24,12 @@ public class BookTypeAdapter extends BaseAdapter {
     public Activity context;
     public LayoutInflater inflater;
     private BookTypeDAO bookTypeDAO;
-    private DatabaseHelper databaseHelper;
 
     public BookTypeAdapter(Activity context, List<BookType> arrayBookType) {
         super();
         this.context = context;
         this.bookTypeList = arrayBookType;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        databaseHelper=new DatabaseHelper(context);
         bookTypeDAO = new BookTypeDAO(context);
     }
 

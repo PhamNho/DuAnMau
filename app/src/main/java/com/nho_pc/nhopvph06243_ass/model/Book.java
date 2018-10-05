@@ -6,10 +6,10 @@ public class Book {
     private String tenSach;
     private String tacGia;
     private String NXB;
-    private int giaBia;
-    private String soLuong;
+    private Double giaBia;
+    private int soLuong;
 
-    public Book(String maSach, String maTheLoai, String tenSach, String tacGia, String NXB, int giaBia, String soLuong) {
+    public Book(String maSach, String maTheLoai, String tenSach, String tacGia, String NXB, Double giaBia, int soLuong) {
         this.maSach = maSach;
         this.maTheLoai = maTheLoai;
         this.tenSach = tenSach;
@@ -63,19 +63,19 @@ public class Book {
         this.NXB = NXB;
     }
 
-    public int getGiaBia() {
+    public Double getGiaBia() {
         return giaBia;
     }
 
-    public void setGiaBia(int giaBia) {
+    public void setGiaBia(Double giaBia) {
         this.giaBia = giaBia;
     }
 
-    public String getSoLuong() {
+    public int getSoLuong() {
         return soLuong;
     }
 
-    public void setSoLuong(String soLuong) {
+    public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
 }

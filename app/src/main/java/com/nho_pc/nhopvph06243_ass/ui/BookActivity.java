@@ -5,7 +5,11 @@ import android.graphics.drawable.AdaptiveIconDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.nho_pc.nhopvph06243_ass.R;
@@ -40,18 +44,48 @@ public class BookActivity extends AppCompatActivity {
                 finish();
             }
         });
-        lvBook = findViewById(R.id.lvBook);
-        bookDAO=new BookDAO(BookActivity.this);
-        bookList=bookDAO.getAllBook();
-        bookAdapter=new BookAdapter(this,bookList);
-        lvBook.setAdapter(bookAdapter);
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bookList.clear();
+        lvBook = (ListView) findViewById(R.id.lvBook);
+        bookDAO = new BookDAO(BookActivity.this);
         bookList = bookDAO.getAllBook();
-        bookAdapter.changeDataset(bookDAO.getAllBook());
+        bookAdapter = new BookAdapter(this, bookList);
+        lvBook.setAdapter(bookAdapter);
+        lvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Book book = (Book) parent.getItemAtPosition(position);
+                Intent intent = new Intent(BookActivity.this,AddBookActivity.class);
+                Bundle b = new Bundle();
+                b.putString("MASACH", book.getMaSach());
+                b.putString("MATHELOAI", book.getMaTheLoai());
+                b.putString("TENSACH", book.getTenSach());
+                b.putString("TACGIA", book.getTacGia());
+                b.putString("NXB", book.getNXB());
+                b.putString("GIABIA", String.valueOf(book.getGiaBia()));
+                b.putString("SOLUONG", String.valueOf(book.getSoLuong()));
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+        // TextFilter
+        lvBook.setTextFilterEnabled(true);
+        EditText edSeach = (EditText) findViewById(R.id.edSearchBook);
+        edSeach.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                System.out.println("Text [" + s + "] - Start [" + start + "] - Before [" + before + "] - Count [" + count + "]");
+                if (count < before) {
+                    bookAdapter.resetData();
+                }
+                bookAdapter.getFilter().filter(s.toString());
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     public void addBooks(View view) {

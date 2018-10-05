@@ -45,7 +45,7 @@ public class BillDetailDAO implements Constant {
     }
 
     //getAllBill
-    public List<BillDetail> getAllHoaDonChiTiet() {
+    public List<BillDetail> getAllBillDetail() {
         List<BillDetail> dsHoaDonChiTiet = new ArrayList<>();
         String sSQL = "SELECT maHDCT, HoaDon.maHoaDon,HoaDon.ngayMua, " + "Sach.maSach, Sach.maTheLoai, Sach.tenSach, Sach.tacGia, Sach.NXB, Sach.giaBia, " +
                 "Sach.soLuong,HoaDonChiTiet.soLuong FROM HoaDonChiTiet INNER JOIN HoaDon " +
@@ -57,7 +57,7 @@ public class BillDetailDAO implements Constant {
                 BillDetail billDetail = new BillDetail();
                 billDetail.setMaHDCT(c.getInt(0));
                 billDetail.setHoaDon(new Bill(c.getString(1), sdf.parse(c.getString(2))));
-                billDetail.setSach(new Book(c.getString(3), c.getString(4), c.getString(5), c.getString(6), c.getString(7), c.getString(8), c.getString(9)));
+                billDetail.setSach(new Book(c.getString(3), c.getString(4), c.getString(5), c.getString(6), c.getString(7), c.getDouble(8), c.getInt(9)));
                 billDetail.setSoLuongMua(c.getInt(10));
                 dsHoaDonChiTiet.add(billDetail);
                 c.moveToNext();
@@ -69,9 +69,9 @@ public class BillDetailDAO implements Constant {
         return dsHoaDonChiTiet;
     }
 
-    //getAll
-    public List<BillDetail> getAllHoaDonChiTietByID(String maHoaDon) {
-        List<BillDetail> dsHoaDonChiTiet = new ArrayList<>();
+    // lấy ra tất cả hóa đơn chi tiết
+    public List<BillDetail> getAllBillDetailByID(String maHoaDon) {
+        List<BillDetail> billDetailList = new ArrayList<>();
         String sSQL = "SELECT maHDCT, HoaDon.maHoaDon,HoaDon.ngayMua, " +
                 "Sach.maSach, Sach.maTheLoai, Sach.tenSach, Sach.tacGia, Sach.NXB, Sach.giaBia, " +
                 "Sach.soLuong,HoaDonChiTiet.soLuong FROM HoaDonChiTiet INNER JOIN HoaDon " +
@@ -83,16 +83,16 @@ public class BillDetailDAO implements Constant {
                 BillDetail billDetail = new BillDetail();
                 billDetail.setMaHDCT(c.getInt(0));
                 billDetail.setHoaDon(new Bill(c.getString(1), sdf.parse(c.getString(2))));
-                billDetail.setSach(new Book(c.getString(3), c.getString(4), c.getString(5), c.getString(6), c.getString(7), c.getString(8), c.getString(9)));
+                billDetail.setSach(new Book(c.getString(3), c.getString(4), c.getString(5), c.getString(6), c.getString(7), c.getDouble(8), c.getInt(9)));
                 billDetail.setSoLuongMua(c.getInt(10));
-                dsHoaDonChiTiet.add(billDetail);
+                billDetailList.add(billDetail);
                 c.moveToNext();
             }
             c.close();
         } catch (Exception e) {
             Log.d(TAG, e.toString());
         }
-        return dsHoaDonChiTiet;
+        return billDetailList;
     }
 
     //update
@@ -111,21 +111,21 @@ public class BillDetailDAO implements Constant {
     }
 
     //delete
-    public int deleteHoaDonChiTietByID(String maHDCT) {
-        int result = db.delete(TABLE_NAME, COLUMN_BILLDETAIL_ID+"=?", new String[]{maHDCT});
+    public int deleteHoaDonChiTietByID(int maHDCT) {
+        int result = db.delete(TABLE_NAME, COLUMN_BILLDETAIL_ID+"=?", new String[]{String.valueOf(maHDCT)});
         if (result == 0)
             return -1;
         return 1;
     }
 
     //check
-    public boolean checkHoaDon(String maHoaDon) {
-//SELECT
+    public boolean checkHoaDon(String billID) {
+        //SELECT
         String[] columns = {COLUMN_BILL_ID};
-//WHERE clause
+        //WHERE clause
         String selection = COLUMN_BILLDETAIL_ID+"=?";
-//WHERE clause arguments
-        String[] selectionArgs = {maHoaDon};
+        //WHERE clause arguments
+        String[] selectionArgs = {billID};
         Cursor c = null;
         try {
             c = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null,

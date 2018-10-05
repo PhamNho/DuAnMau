@@ -13,19 +13,44 @@
         android:background="@color/colorPrimary"
         app:titleTextColor="#ffffff" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        android:layout_marginTop="55dp">
+
+        <EditText
+            android:id="@+id/edSearchBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="4"
+            android:hint="Tìm kiếm" />
+
+        <Button
+            android:id="@+id/btnTim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tìm" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/lvBook"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="55dp">
+        android:layout_marginTop="110dp">
     </ListView>
+
     <android.support.design.widget.FloatingActionButton
-        android:onClick="addBooks"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:padding="0dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@mipmap/ic_add"/>
+        android:onClick="addBooks"
+        android:padding="0dp"
+        android:src="@mipmap/ic_add" />
 
 </FrameLayout>

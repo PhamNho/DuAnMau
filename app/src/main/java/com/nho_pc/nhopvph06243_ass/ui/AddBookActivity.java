@@ -6,18 +6,25 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
+import com.nho_pc.nhopvph06243_ass.adapter.BookAdapter;
 import com.nho_pc.nhopvph06243_ass.dao.BookDAO;
 import com.nho_pc.nhopvph06243_ass.dao.BookTypeDAO;
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
 import com.nho_pc.nhopvph06243_ass.model.Book;
+import com.nho_pc.nhopvph06243_ass.model.BookType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddBookActivity extends AppCompatActivity {
     private Toolbar customtoolbarAddBook;
@@ -28,46 +35,34 @@ public class AddBookActivity extends AppCompatActivity {
     private EditText edtPublisher;
     private EditText edtPriceBook;
     private EditText edtQuantily;
-    private DatabaseHelper databaseHelper;
     private BookDAO bookDAO;
-    private Cursor cursorType;
     private BookTypeDAO bookTypeDAO;
-    private SimpleCursorAdapter adapterType;
+    private String maTheLoai = "";
+    private List<BookType> listTheLoai = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
         setTitle("Thêm sách");
-        databaseHelper = new DatabaseHelper(this);
         bookDAO = new BookDAO(this);
-        bookTypeDAO=new BookTypeDAO(this);
+        bookTypeDAO = new BookTypeDAO(this);
         initViews();
+        getType();
+        customtoolbarAddBook = (Toolbar) findViewById(R.id.customtoolbarAddBook);
         setSupportActionBar(customtoolbarAddBook);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         customtoolbarAddBook.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        cursorType = (Cursor) bookTypeDAO.getAllBookType();
-        if (cursorType != null) {
-            adapterType = new SimpleCursorAdapter(this,
-                    android.R.layout.simple_spinner_item,
-                    cursorType,
-                    new String[]{"typename"},
-                    new int[]{android.R.id.text1});
-            spnBookType.setAdapter((SpinnerAdapter) cursorType);
-        }
         spnBookType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Cursor c = (Cursor) spnBookType.getItemAtPosition(position);
-                String typename = c.getString(2);
-                Toast.makeText(getApplicationContext(), typename, Toast.LENGTH_SHORT).show();
+                maTheLoai = listTheLoai.get(spnBookType.getSelectedItemPosition()).getTypeID();
             }
 
             @Override
@@ -75,10 +70,39 @@ public class AddBookActivity extends AppCompatActivity {
 
             }
         });
+        //load data into form
+        Intent in = getIntent();
+        Bundle b = in.getExtras();
+        if (b != null) {
+            edtBookCode.setText(b.getString("MASACH"));
+            String maTheLoai = b.getString("MATHELOAI");
+            edtBookName.setText(b.getString("TENSACH"));
+            edtPublisher.setText(b.getString("NXB"));
+            edtAuthorName.setText(b.getString("TACGIA"));
+            edtPriceBook.setText(b.getString("GIABIA"));
+            edtQuantily.setText(b.getString("SOLUONG"));
+            spnBookType.setSelection(checkPositionTheLoai(maTheLoai));
+        }
+    }
+    public void getType(){
+        bookTypeDAO = new BookTypeDAO(AddBookActivity.this);
+        listTheLoai = bookTypeDAO.getAllBookType();
+        ArrayAdapter<BookType> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listTheLoai);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnBookType.setAdapter(dataAdapter);
+    }
+
+    public int checkPositionTheLoai(String strTheLoai){
+        for (int i = 0; i <listTheLoai.size(); i++){
+            if (strTheLoai.equals(listTheLoai.get(i).getTypeID())){
+                return i;
+            }
+        }
+        return 0;
     }
 
     private void initViews() {
-        customtoolbarAddBook = (Toolbar) findViewById(R.id.customtoolbarAddBook);
+
         edtBookCode = (EditText) findViewById(R.id.edtBookCode);
         spnBookType = (Spinner) findViewById(R.id.spnBookType);
         edtBookName = (EditText) findViewById(R.id.edtBookName);
@@ -96,7 +120,7 @@ public class AddBookActivity extends AppCompatActivity {
         String publisher = edtPublisher.getText().toString();
         String priceBook = edtPriceBook.getText().toString();
         String quantily = edtQuantily.getText().toString();
-        if (bookID.isEmpty() || typeID.isEmpty() || bookName.isEmpty() || authorname.isEmpty()|| publisher.isEmpty()|| priceBook.isEmpty()|| quantily.isEmpty()) {
+        if (bookID.isEmpty() || typeID.isEmpty() || bookName.isEmpty() || authorname.isEmpty() || publisher.isEmpty() || priceBook.isEmpty() || quantily.isEmpty()) {
             if (bookID.isEmpty())
                 edtBookCode.setError(getString(R.string.notify_empty_user_name));
             if (bookName.isEmpty())
@@ -111,11 +135,13 @@ public class AddBookActivity extends AppCompatActivity {
                 edtQuantily.setError(getString(R.string.notify_empty_user_name));
         } else {
             try {
-                int priceBook1=Integer.parseInt(priceBook);
-                Book book = new Book(bookID, typeID, bookName, authorname, publisher, priceBook1, quantily);
+                Double priceBook1 =Double.parseDouble(priceBook);
+                int quantily1=Integer.parseInt(quantily);
+                Book book = new Book(bookID, typeID, bookName, authorname, publisher, priceBook1, quantily1);
                 bookDAO.inserBook(book);
+                Toast.makeText(this, "Đã thêm", Toast.LENGTH_SHORT).show();
                 finish();
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
@@ -128,5 +154,6 @@ public class AddBookActivity extends AppCompatActivity {
 
     public void addBookTypes(View view) {
         startActivity(new Intent(getApplicationContext(), AddBookTypeActivity.class));
+        finish();
     }
 }

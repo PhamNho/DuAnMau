@@ -18,13 +18,12 @@ import com.nho_pc.nhopvph06243_ass.model.Bill;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class AddBillActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private Toolbar customtoolbarAddBill;
-    private EditText edtBillCode;
-    private EditText edtBillDate;
+    private EditText edtBill_Code;
+    private EditText edtBill_Date;
     private BillDAO billDAO;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -48,28 +47,50 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
 
     private void initViews() {
         customtoolbarAddBill = (Toolbar) findViewById(R.id.customtoolbarAddBill);
-        edtBillCode = (EditText) findViewById(R.id.edtBillCode);
-        edtBillDate = (EditText) findViewById(R.id.edtBillDate);
+        edtBill_Code = (EditText) findViewById(R.id.edtBillCode);
+        edtBill_Date = (EditText) findViewById(R.id.edtBillDate);
 
+    }
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        Calendar cal = new GregorianCalendar(year, month, day);
+        setDate(cal);
+    }
+    private void setDate(final Calendar calendar) {
+        edtBill_Date.setText(sdf.format(calendar.getTime()));
+    }
+    public static class DatePickerFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener)getActivity(), year, month, day);
+        }
+    }
+    public void datePicker(View view){
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.show(getFragmentManager(),"date");
     }
 
     public void addBill(View view) {
         billDAO = new BillDAO(AddBillActivity.this);
+        String edtB_ID = edtBill_Code.getText().toString().trim();
+        String edtB_Date = edtBill_Date.getText().toString().trim();
         try {
-            if (validation() < 0) {
+            if (edtB_ID.isEmpty() || edtB_Date.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             } else {
-                Bill bill = new Bill(edtBillCode.getText().toString(), sdf.parse(edtBillDate.getText().toString()));
-                if (billDAO.inserBill(bill) > 0) {
-                    Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AddBillActivity.this, BillDetailActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("MAHOADON", edtBillCode.getText().toString());
-                    intent.putExtras(b);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                }
+                Bill bill = new Bill(edtB_ID, sdf.parse(edtB_Date));
+                billDAO.inserBill(bill);
+                Toast.makeText(getApplicationContext(), "Đã thêm", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddBillActivity.this, BillDetailActivity.class);
+                Bundle b = new Bundle();
+                b.putString("MAHOADON", edtB_ID);
+                intent.putExtras(b);
+                startActivity(intent);
+                finish();
             }
         } catch (Exception ex) {
         }
@@ -82,35 +103,5 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
     public void selectDates(View view) {
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.show(getFragmentManager(), "date");
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int day) {
-        Calendar cal = new GregorianCalendar(year, month, day);
-        setDate(cal);
-    }
-
-    private void setDate(final Calendar calendar) {
-        edtBillDate.setText(sdf.format(calendar.getTime()));
-    }
-
-    public static class DatePickerFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
-        }
-    }
-
-    public int validation() {
-        if
-                (edtBillCode.getText().toString().isEmpty() || edtBillDate.getText().toString().isEmpty()
-                ) {
-            return -1;
-        }
-        return 1;
     }
 }

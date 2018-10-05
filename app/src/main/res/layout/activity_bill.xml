@@ -12,12 +12,18 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:titleTextColor="#ffffff" />
+    <EditText
+        android:id="@+id/edtSearch"
+        android:layout_marginTop="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tìm kiếm"/>
 
     <ListView
         android:id="@+id/lvBill"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="55dp">
+        android:layout_marginTop="110dp">
     </ListView>
     <android.support.design.widget.FloatingActionButton
         android:onClick="addBills"

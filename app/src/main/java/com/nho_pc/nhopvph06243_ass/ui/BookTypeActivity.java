@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.nho_pc.nhopvph06243_ass.R;
@@ -23,7 +26,6 @@ public class BookTypeActivity extends AppCompatActivity {
     private Toolbar customtoolbarBookType;
     private ListView lvBookType;
     private static List<BookType> bookTypeList=new ArrayList<>();
-    private DatabaseHelper databaseHelper;
     private BookTypeDAO bookTypeDAO;
     private BookTypeAdapter bookTypeAdapter=null;
 
@@ -32,37 +34,45 @@ public class BookTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_type);
         setTitle("Thể loại");
-        initViews();
         customtoolbarBookType = findViewById(R.id.customtoolbarBookType);
         setSupportActionBar(customtoolbarBookType);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         customtoolbarBookType.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        lvBookType = findViewById(R.id.lvBookType);
-        bookTypeDAO=new BookTypeDAO(BookTypeActivity.this);
-        bookTypeList=bookTypeDAO.getAllBookType();
 
+
+        lvBookType = (ListView) findViewById(R.id.lvBookType);
+        registerForContextMenu(lvBookType);
+        bookTypeDAO = new BookTypeDAO(BookTypeActivity.this);
+        bookTypeList = bookTypeDAO.getAllBookType();
         bookTypeAdapter = new BookTypeAdapter(this, bookTypeList);
         lvBookType.setAdapter(bookTypeAdapter);
+        lvBookType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(BookTypeActivity.this,AddBookTypeActivity.class);
+                Bundle b = new Bundle();
+                b.putString("MATHELOAI", bookTypeList.get(position).getTypeID());
+                b.putString("TENTHELOAI", bookTypeList.get(position).getTypeName());
+                b.putString("MOTA", bookTypeList.get(position).getDescription());
+                b.putString("VITRI", String.valueOf(bookTypeList.get(position).getPosition()));
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         bookTypeList.clear();
         bookTypeList = bookTypeDAO.getAllBookType();
-        bookTypeAdapter.changeDataset(bookTypeDAO.getAllBookType());
-    }
-
-    private void initViews() {
-        databaseHelper=new DatabaseHelper(this);
-        bookTypeDAO=new BookTypeDAO(this);
-        lvBookType=findViewById(R.id.lvBookType);
+        bookTypeAdapter.changeDataset(bookTypeList);
     }
 
     public void addBookTypes(View view) {

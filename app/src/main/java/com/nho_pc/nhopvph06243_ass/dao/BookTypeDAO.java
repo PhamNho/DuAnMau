@@ -18,7 +18,6 @@ public class BookTypeDAO implements Constant {
     private DatabaseHelper databaseHelper;
     public static final String TABLE_NAME = "BookType";
     public static final String TAG = "BookTypeDAO";
-
     public BookTypeDAO(Context context) {
         databaseHelper = new DatabaseHelper(context);
         db = databaseHelper.getWritableDatabase();
@@ -76,41 +75,5 @@ public class BookTypeDAO implements Constant {
         }
         c.close();
         return bookTypeList;
-    }
-    public BookType getBookTypeByID(String typeID){
-        BookType bookType = null;
-
-        // Truyen vao Ten bang, array bao gom ten cot, ten cot khoa chinh, gia tri khoa chinh, cac tham so con lai la null
-
-        Cursor cursor = db.query(TABLE_NAME, new String[]{
-                        COLUMN_TYPE_ID,
-                        COLUMN_TYPE_NAME,
-                        COLUMN_DESCRIPTION,
-                        COLUMN_POSITION},
-                "typeID=?", new String[]{typeID},
-                null,
-                null,
-                null,
-                null);
-
-        // moveToFirst : kiem tra xem cursor co chua du lieu khong, ham nay tra ve gia tri la true or false
-        if (cursor != null && cursor.moveToFirst()) {
-
-            String type_ID = cursor.getString(cursor.getColumnIndex(COLUMN_TYPE_ID));
-
-            String typename = cursor.getString(cursor.getColumnIndex(COLUMN_TYPE_NAME));
-
-            String description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
-
-            String position =cursor.getString(cursor.getColumnIndex(COLUMN_POSITION));
-
-            // khoi tao user voi cac gia tri lay duoc
-            bookType = new BookType(type_ID, typename, description, position);
-
-
-        }
-        cursor.close();
-
-        return bookType;
     }
 }
