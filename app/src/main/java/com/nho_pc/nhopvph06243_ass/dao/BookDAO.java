@@ -7,33 +7,33 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
+import com.nho_pc.nhopvph06243_ass.listener.Constant;
 import com.nho_pc.nhopvph06243_ass.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDAO {
+public class BookDAO implements Constant {
     private SQLiteDatabase db;
-    private DatabaseHelper dbHelper;
-    public static final String TABLE_NAME = "Sach";
-    public static final String SQL_BOOK ="CREATE TABLE Sach (maSach text primarykey, maTheLoai text, tensach text," + "tacGia text, NXB text, giaBia double, soLuong number);";
+    private DatabaseHelper databaseHelper;
+    public static final String TABLE_NAME = "book";
     public static final String TAG = "SachDAO";
     public BookDAO(Context context) {
-        dbHelper = new DatabaseHelper(context);
-        db = dbHelper.getWritableDatabase();
+        databaseHelper = new DatabaseHelper(context);
+        db = databaseHelper.getWritableDatabase();
     }
     //insert
     public int inserBook(Book book){
         ContentValues values = new ContentValues();
-        values.put("maSach",book.getMaSach());
-        values.put("maTheLoai",book.getMaTheLoai());
-        values.put("tensach",book.getTenSach());
-        values.put("tacGia",book.getTacGia());
-        values.put("NXB",book.getNXB());
-        values.put("giaBia",book.getGiaBia());
-        values.put("soLuong",book.getSoLuong());
+        values.put(COLUMN_BOOK_ID,book.getMaSach());
+        values.put(COLUMN_TYPE_ID,book.getMaTheLoai());
+        values.put(COLUMN_BOOK_NAME,book.getTenSach());
+        values.put(COLUMN_TAC_GIA,book.getTacGia());
+        values.put(COLUMN_NXB,book.getNXB());
+        values.put(COLUMN_GIA_BIA,book.getGiaBia());
+        values.put(COLUMN_SO_LUONG,book.getSoLuong());
         if (checkPrimaryKey(book.getMaSach())){
-            int result = db.update(TABLE_NAME,values,"masach=?", new String[]{book.getMaSach()});
+            int result = db.update(TABLE_NAME,values,"bookID=?", new String[]{book.getMaSach()});
             if (result == 0){
                 return -1;
             }
@@ -60,10 +60,9 @@ public class BookDAO {
             book.setTenSach(c.getString(2));
             book.setTacGia(c.getString(3));
             book.setNXB(c.getString(4));
-            book.setGiaBia(c.getDouble(5));
-            book.setSoLuong(c.getInt(6));
+            book.setGiaBia(c.getString(5));
+            book.setSoLuong(c.getString(6));
             dsBook.add(book);
-            Log.d("//=====",book.toString());
             c.moveToNext();
         }
         c.close();
@@ -72,14 +71,14 @@ public class BookDAO {
     //update
     public int updateBook(Book book){
         ContentValues values = new ContentValues();
-        values.put("maSach",book.getMaSach());
-        values.put("maTheLoai",book.getMaTheLoai());
-        values.put("tensach",book.getTenSach());
-        values.put("tacGia",book.getTacGia());
-        values.put("NXB",book.getNXB());
-        values.put("giaBia",book.getGiaBia());
-        values.put("soLuong",book.getSoLuong());
-        int result = db.update(TABLE_NAME,values,"maSach=?", new String[]{book.getMaSach()});
+        values.put(COLUMN_BOOK_ID,book.getMaSach());
+        values.put(COLUMN_TYPE_ID,book.getMaTheLoai());
+        values.put(COLUMN_BOOK_NAME,book.getTenSach());
+        values.put(COLUMN_TAC_GIA,book.getTacGia());
+        values.put(COLUMN_NXB,book.getNXB());
+        values.put(COLUMN_GIA_BIA,book.getGiaBia());
+        values.put(COLUMN_SO_LUONG,book.getSoLuong());
+        int result = db.update(TABLE_NAME,values,"bookID=?", new String[]{book.getMaSach()});
         if (result == 0){
             return -1;
         }
@@ -87,7 +86,7 @@ public class BookDAO {
     }
     //delete
     public int deleteBookByID(String maSach){
-        int result = db.delete(TABLE_NAME,"maSach=?",new String[]{maSach});
+        int result = db.delete(TABLE_NAME,"bookID=?",new String[]{maSach});
         if (result == 0)
             return -1;
         return 1;
@@ -95,9 +94,9 @@ public class BookDAO {
     //check
     public boolean checkPrimaryKey(String strPrimaryKey){
         //SELECT
-        String[] columns = {"masach"};
+        String[] columns = {COLUMN_BOOK_ID};
         //WHERE clause
-        String selection = "masach=?";
+        String selection = "bookID=?";
         //WHERE clause arguments
         String[] selectionArgs = {strPrimaryKey};
         Cursor c = null;
@@ -120,9 +119,9 @@ public class BookDAO {
     public Book checkBook(String strPrimaryKey){
         Book book =new Book();
         //SELECT
-        String[] columns = {"masach"};
+        String[] columns = {COLUMN_BOOK_ID};
         //WHERE clause
-        String selection = "masach=?";
+        String selection = "bookID=?";
         //WHERE clause arguments
         String[] selectionArgs = {strPrimaryKey};
         Cursor c = null;
@@ -136,8 +135,8 @@ public class BookDAO {
                 book.setTenSach(c.getString(2));
                 book.setTacGia(c.getString(3));
                 book.setNXB(c.getString(4));
-                book.setGiaBia(c.getDouble(5));
-                book.setSoLuong(c.getInt(6));
+                book.setGiaBia(c.getString(5));
+                book.setSoLuong(c.getString(6));
                 Log.d("//=====",book.toString());
                 break;
             }
@@ -152,7 +151,7 @@ public class BookDAO {
     public Book getBookByID(String bookcode){
         Book book = null;
         //WHERE clause
-        String selection = "masach=?";
+        String selection = "bookID=?";
         //WHERE clause arguments
         String[] selectionArgs = {bookcode};
         Cursor c = db.query(TABLE_NAME,null,selection,selectionArgs,null,null,null);
@@ -165,8 +164,8 @@ public class BookDAO {
             book.setTenSach(c.getString(2));
             book.setTacGia(c.getString(3));
             book.setNXB(c.getString(4));
-            book.setGiaBia(c.getDouble(5));
-            book.setSoLuong(c.getInt(6));
+            book.setGiaBia(c.getString(5));
+            book.setSoLuong(c.getString(6));
             break;
         }
         c.close();
@@ -185,8 +184,8 @@ public class BookDAO {
             Log.d("//=====",c.getString(0));
             Book book = new Book();
             book.setMaSach(c.getString(0));
-            book.setSoLuong(c.getInt(1));
-            book.setGiaBia(0);
+            book.setSoLuong(c.getString(1));
+            book.setGiaBia("0");
             book.setMaTheLoai("");
             book.setTenSach("");
             book.setTacGia("");

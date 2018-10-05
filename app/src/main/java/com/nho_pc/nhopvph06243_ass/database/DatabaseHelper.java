@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.nho_pc.nhopvph06243_ass.dao.BillDAO;
+//import com.nho_pc.nhopvph06243_ass.dao.BillDetailDAO;
 import com.nho_pc.nhopvph06243_ass.dao.BookDAO;
 import com.nho_pc.nhopvph06243_ass.dao.BookTypeDAO;
 import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
@@ -21,10 +22,11 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Constant{
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(UserDAO.SQL_USER);
-        db.execSQL(BookTypeDAO.SQL_BOOK_TYPE);
-        db.execSQL(BookDAO.SQL_BOOK);
-        db.execSQL(BillDAO.SQL_Bill);
+        db.execSQL(UserDAO.CREATE_USER_TABLE);
+        db.execSQL(BookTypeDAO.CREATE_BOOK_TYPE_TABLE);
+        db.execSQL(BookDAO.CREATE_BOOK_TABLE);
+        db.execSQL(BillDAO.CREATE_BILL_TABLE);
+//        db.execSQL(BillDAO.COLUMN_BILLDETAIL_ID);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -32,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Constant{
         db.execSQL("Drop table if exists "+BookTypeDAO.TABLE_NAME);
         db.execSQL("Drop table if exists "+BookDAO.TABLE_NAME);
         db.execSQL("Drop table if exists "+BillDAO.TABLE_NAME);
+//        db.execSQL("Drop table if exists "+BillDetailDAO.TABLE_NAME);
         onCreate(db);
     }
 }

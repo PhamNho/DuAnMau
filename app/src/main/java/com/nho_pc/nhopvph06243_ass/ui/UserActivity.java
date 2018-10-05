@@ -27,15 +27,10 @@ import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
       private Toolbar customtoolbarUser;
-      private DatabaseHelper databaseHelper;
-//    private UserAdapter adapter;
-//    private UserDAO userDAO;
-//    private List<Users> usersList;
-
-    public static List<Users> usersList = new ArrayList<>();
-    ListView lvNguoiDung;
-    UserAdapter adapter = null;
-    UserDAO userDAO;
+      public static List<Users> usersList = new ArrayList<>();
+      private ListView lvNguoiDung;
+      private UserAdapter adapter = null;
+      private UserDAO userDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +38,9 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         setTitle("Người dùng");
         customtoolbarUser = (Toolbar) findViewById(R.id.customtoolbarUser);
-        userDAO=new UserDAO(UserActivity.this);
-        usersList=userDAO.getAllUsers();
-
-        adapter=new UserAdapter(this,usersList);
-
         setSupportActionBar(customtoolbarUser);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         customtoolbarUser.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,9 +52,9 @@ public class UserActivity extends AppCompatActivity {
         lvNguoiDung = findViewById(R.id.lvUser);
         userDAO=new UserDAO(UserActivity.this);
         usersList=userDAO.getAllUsers();
-
         adapter = new UserAdapter(this, usersList);
         lvNguoiDung.setAdapter(adapter);
+
         lvNguoiDung.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -4,16 +4,17 @@ public class BookType {
     private String typeID;
     private String typeName;
     private String Description;
-    private int position;
+    private String position;
 
-    public BookType(String typeID, String typeName, String description, int position) {
+    public BookType(String typeID, String typeName, String description, String position) {
+
         this.typeID = typeID;
         this.typeName = typeName;
-        Description = description;
+        this.Description = description;
         this.position = position;
     }
 
-    public BookType(){
+    public BookType() {
 
     }
 
@@ -41,11 +42,11 @@ public class BookType {
         Description = description;
     }
 
-    public int getPosition() {
+    public String getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(String position) {
         this.position = position;
     }
 }

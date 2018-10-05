@@ -16,8 +16,7 @@ import java.util.List;
 public class UserDAO implements  Constant{
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
-    public static final String TABLE_NAME = "Users";
-    public static final String SQL_USER = "CREATE TABLE Users(username text primary key, password text, name text, phonenumber text);";
+    public static final String TABLE_NAME = "users";
 
     public UserDAO(Context context) {
         dbHelper = new DatabaseHelper(context);
@@ -25,25 +24,20 @@ public class UserDAO implements  Constant{
     }
 
     //insert
-    public void insertUser(Users user) {
-
-
+    public long insertUser(Users user) {
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COLUMN_USERNAME, user.getUserName());
         contentValues.put(COLUMN_PASSWORD, user.getPassword());
         contentValues.put(COLUMN_NAME, user.getName());
         contentValues.put(COLUMN_PHONE_NUMBER, user.getPhoneNumber());
-
-        long id = db.insert(TABLE_NAME, null, contentValues);
-
-        if (Constant.isDEBUG) Log.e("insertUser", "insertUser ID : " + id);
-
-        db.close();
-
+        long result = db.insert(TABLE_NAME, null,contentValues);
+        if (result == 0) {
+            return -1;
+        }
+        return 1;
     }
     // getUser
-    public Users getUser(String username, String password1) {
+    public Users getUserByID(String username, String password1) {
 
         Users users = null;
 
@@ -93,7 +87,6 @@ public class UserDAO implements  Constant{
             users.setName(c.getString(2));
             users.setPhoneNumber(c.getString(3));
             usersList.add(users);
-            Log.d("getAllUsers", users.toString());
             c.moveToNext();
         }
         c.close();

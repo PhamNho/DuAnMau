@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edtBookTypeCode"
+                    android:id="@+id/edtBookTypeID"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Mã thể loại"
@@ -57,12 +57,12 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edtLocation"
+                    android:id="@+id/edtPositionType"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Vị trí"
                     android:imeOptions="actionNext"
-                    android:inputType="text"/>
+                    android:inputType="number"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

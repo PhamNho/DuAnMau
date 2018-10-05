@@ -29,9 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox cbRemember;
     private Button btnLogin;
 
-    private String USERNAME_KEY = "user";
-    private String PASSWORD_KEY = "password";
-
     private UserDAO userDAO;
     private String strUser, strPass;
 
@@ -40,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
-
 //        btnLogin.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -148,11 +144,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        userDAO = new UserDAO(getApplicationContext());
         edtUser = findViewById(R.id.edtUser);
         edtPassword = findViewById(R.id.edtPassword);
         cbRemember = findViewById(R.id.cbRemember);
         btnLogin = findViewById(R.id.btnLogin);
+        userDAO = new UserDAO(LoginActivity.this);
     }
 
     public void huyLogin(View view) {

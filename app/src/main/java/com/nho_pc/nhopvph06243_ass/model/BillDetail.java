@@ -1,24 +1,28 @@
 package com.nho_pc.nhopvph06243_ass.model;
 
-public class DetailBill {
-    private int maHDCT;
+public class BillDetail {
+    private int billdetailID;
     private Bill hoaDon;
     private Book sach;
     private int soLuongMua;
 
-    public DetailBill(int maHDCT, Bill hoaDon, Book sach, int soLuongMua) {
-        this.maHDCT = maHDCT;
+    public BillDetail(int billdetailID, Bill hoaDon, Book sach, int soLuongMua) {
+        this.billdetailID = billdetailID;
         this.hoaDon = hoaDon;
         this.sach = sach;
         this.soLuongMua = soLuongMua;
     }
 
-    public int getMaHDCT() {
-        return maHDCT;
+    public BillDetail() {
+
     }
 
-    public void setMaHDCT(int maHDCT) {
-        this.maHDCT = maHDCT;
+    public int getbilldetailID() {
+        return billdetailID;
+    }
+
+    public void setMaHDCT(int billdetailID) {
+        this.billdetailID = billdetailID;
     }
 
     public Bill getHoaDon() {
@@ -43,14 +47,5 @@ public class DetailBill {
 
     public void setSoLuongMua(int soLuongMua) {
         this.soLuongMua = soLuongMua;
-    }
-    @Override
-    public String toString() {
-        return "HoaDonChiTiet{" +
-                "maHDCT=" + maHDCT +
-                ", hoaDon=" + hoaDon.toString() +
-                ", sach=" + sach.toString() +
-                ", soLuongMua=" + soLuongMua +
-                '}';
     }
 }

@@ -86,10 +86,10 @@ import java.util.List;
 
 public class UserAdapter extends BaseAdapter {
 
-    List<Users> usersList;
+    private List<Users> usersList;
     public Activity context;
     public LayoutInflater inflater;
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     public UserAdapter(Activity context, List<Users> arrayUser) {
         super();
