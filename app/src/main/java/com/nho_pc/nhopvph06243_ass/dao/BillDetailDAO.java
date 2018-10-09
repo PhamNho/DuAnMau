@@ -70,12 +70,12 @@ public class BillDetailDAO implements Constant {
     }
 
     // lấy ra tất cả hóa đơn chi tiết
-    public List<BillDetail> getAllBillDetailByID(String maHoaDon) {
+    public List<BillDetail> getAllBillDetailByID(String billID) {
         List<BillDetail> billDetailList = new ArrayList<>();
-        String sSQL = "SELECT maHDCT, HoaDon.maHoaDon,HoaDon.ngayMua, " +
-                "Sach.maSach, Sach.maTheLoai, Sach.tenSach, Sach.tacGia, Sach.NXB, Sach.giaBia, " +
-                "Sach.soLuong,HoaDonChiTiet.soLuong FROM HoaDonChiTiet INNER JOIN HoaDon " +
-                "on HoaDonChiTiet.maHoaDon = HoaDon.maHoaDon INNER JOIN Sach on Sach.maSach = HoaDonChiTiet.maSach where HoaDonChiTiet.maHoaDon='" + maHoaDon + "'";
+        String sSQL = "SELECT billdetailID, bill.billID,bill.datebill, " +
+                "book.bookID, book.typeID, book.bookname, book.tacgia, book.nxb, book.giabia, " +
+                "book.soluong,billdetail.somuongmua FROM billdetail INNER JOIN bill " +
+                "on billdetail.billID = bill.billID INNER JOIN book on book.booID = billdetail.bookID where billdetail.billID='" + billID + "'";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
         try {
@@ -145,9 +145,9 @@ public class BillDetailDAO implements Constant {
 
     public double getDoanhThuTheoNgay() {
         double doanhThu = 0;
-        String sSQL = "SELECT SUM(tongtien) from (SELECT SUM(book.giabia * billdetail.soLuong)as 'tongtien' " +
-        "FROM HoaDon INNER JOIN HoaDonChiTiet on HoaDon.maHoaDon = HoaDonChiTiet.maHoaDon " +
-        "INNER JOIN Sach on HoaDonChiTiet.maSach = Sach.maSach where HoaDon.ngayMua = date('now') GROUP BY HoaDonChiTiet.maSach)tmp ";
+        String sSQL = "SELECT SUM(tongtien) from (SELECT SUM(book.giabia * billdetail.soluongmua)as 'tongtien' " +
+        "FROM bill INNER JOIN billdetail on bill.billID = billdetail.billID" +
+        "INNER JOIN book on billdetail.bookID = book.bookID where bill.datebill = date('now') GROUP BY billdetail.bookID)tmp ";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
         while (c.isAfterLast() == false) {
@@ -160,9 +160,9 @@ public class BillDetailDAO implements Constant {
 
     public double getDoanhThuTheoThang() {
         double doanhThu = 0;
-        String sSQL = "SELECT SUM(tongtien) from (SELECT SUM(Sach.giaBia * HoaDonChiTiet.soLuong) as 'tongtien' " +
-                "FROM HoaDon INNER JOIN HoaDonChiTiet on HoaDon.maHoaDon = HoaDonChiTiet.maHoaDon " +
-                "INNER JOIN Sach on HoaDonChiTiet.maSach = Sach.maSach where strftime('%m',HoaDon.ngayMua) = strftime('%m','now') GROUP BY HoaDonChiTiet.maSach)tmp";
+        String sSQL = "SELECT SUM(tongtien) from (SELECT SUM(book.giaBia * billdetail.soluongmua) as 'tongtien' " +
+        "FROM bill INNER JOIN billdetail on bill.billID = billdetail.billID" +
+        "INNER JOIN Sach on HoaDonChiTiet.maSach = Sach.maSach where strftime('%m',HoaDon.ngayMua) = strftime('%m','now') GROUP BY HoaDonChiTiet.maSach)tmp";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
         while (c.isAfterLast() == false) {

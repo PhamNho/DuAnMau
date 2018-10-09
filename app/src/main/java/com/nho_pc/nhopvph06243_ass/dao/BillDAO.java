@@ -44,18 +44,18 @@ public class BillDAO implements Constant {
 
     //getAll
     public List<Bill> getAllBill() throws ParseException {
-        List<Bill> dsBill = new ArrayList<>();
+        List<Bill> billList = new ArrayList<>();
         Cursor c = db.query(TABLE_NAME, null, null, null, null, null, null);
         c.moveToFirst();
         while (c.isAfterLast() == false) {
             Bill bill = new Bill();
             bill.setMaHoaDon(c.getString(0));
             bill.setNgayMua(sdf.parse(c.getString(1)));
-            dsBill.add(bill);
+            billList.add(bill);
             c.moveToNext();
         }
         c.close();
-        return dsBill;
+        return billList;
     }
 
     //update

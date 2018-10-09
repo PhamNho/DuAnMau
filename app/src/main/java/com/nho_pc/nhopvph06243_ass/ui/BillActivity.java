@@ -53,6 +53,7 @@ public class BillActivity extends AppCompatActivity {
         billDAO = new BillDAO(BillActivity.this);
         try {
             billList = billDAO.getAllBill();
+            Log.e("ABC",billList.size()+"");
         } catch (Exception e) {
             Log.d("Error: ", e.toString());
         }

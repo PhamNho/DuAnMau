@@ -20,7 +20,7 @@ public interface Constant {
     //===============
 
     // TABLE BOOK TYPE
-    String TYPE_TABLE = "BookType";
+    String TYPE_TABLE = "booktype";
     String COLUMN_TYPE_ID = "typeID";
     String COLUMN_TYPE_NAME = "typename";
     String COLUMN_DESCRIPTION = "description";
@@ -44,7 +44,7 @@ public interface Constant {
     String COLUMN_SO_LUONG = "soluong";
 
     String CREATE_BOOK_TABLE = "CREATE TABLE " + BOOK_TABLE + "(" +
-            COLUMN_BOOK_ID + " VARCHAR PRIMARY KEY NOT NULL," +
+            COLUMN_BOOK_ID + " VARCHAR PRIMARY KEY," +
             COLUMN_TYPE_ID + " CHAR(5) NOT NULL," +
             COLUMN_BOOK_NAME + " VARCHAR NOT NULL," +
             COLUMN_TAC_GIA + " VARCHAR NOT NULL," +
@@ -63,19 +63,19 @@ public interface Constant {
     String CREATE_BILL_TABLE = "CREATE TABLE " + BILL_TABLE + "(" +
             COLUMN_BILL_ID + " VARCHAR PRIMARY KEY NOT NULL," +
             COLUMN_DATE_BILL + " DATE NOT NULL," +
-            COLUMN_BOOK_ID + " VARCHAR NOT NULL" +
+            COLUMN_BOOK_ID + " VARCHAR" +
             ")";
 
     //===============
 
     // TABLE BILLDETAIL
-    String BILLDETAIL_TABLE = "HoaDonChiTiet";
-    String COLUMN_BILLDETAIL_ID = "maHDCT";
-    String COLUMN_SO_LUONG_MUA ="soLuongMua";
+    String BILLDETAIL_TABLE = "billdetail";
+    String COLUMN_BILLDETAIL_ID = "billdetailID";
+    String COLUMN_SO_LUONG_MUA ="somuongmua";
     String CREATE_BILLDETAIL_TABLE = "CREATE TABLE " + BILLDETAIL_TABLE + "(" +
             COLUMN_BILLDETAIL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             COLUMN_BILL_ID + " VARCHAR NOT NULL," +
-            COLUMN_BOOK_ID + " VARCHAR NOT NULL," +
+            COLUMN_BOOK_ID + " VARCHAR," +
             COLUMN_SO_LUONG_MUA + " INT NOT NULL" +
             ")";
 }

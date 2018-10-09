@@ -17,8 +17,10 @@ import com.nho_pc.nhopvph06243_ass.dao.BillDAO;
 import com.nho_pc.nhopvph06243_ass.model.Bill;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class AddBillActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private Toolbar customtoolbarAddBill;
@@ -46,19 +48,22 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
     }
 
     private void initViews() {
-        customtoolbarAddBill = (Toolbar) findViewById(R.id.customtoolbarAddBill);
-        edtBill_Code = (EditText) findViewById(R.id.edtBillCode);
-        edtBill_Date = (EditText) findViewById(R.id.edtBillDate);
+        customtoolbarAddBill = findViewById(R.id.customtoolbarAddBill);
+        edtBill_Code = findViewById(R.id.edtBillCode);
+        edtBill_Date = findViewById(R.id.edtBillDate);
 
     }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Calendar cal = new GregorianCalendar(year, month, day);
         setDate(cal);
     }
+
     private void setDate(final Calendar calendar) {
         edtBill_Date.setText(sdf.format(calendar.getTime()));
     }
+
     public static class DatePickerFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -66,12 +71,13 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
-            return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener)getActivity(), year, month, day);
+            return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
         }
     }
-    public void datePicker(View view){
+
+    public void datePicker(View view) {
         DatePickerFragment fragment = new DatePickerFragment();
-        fragment.show(getFragmentManager(),"date");
+        fragment.show(getFragmentManager(), "date");
     }
 
     public void addBill(View view) {
@@ -84,6 +90,7 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
             } else {
                 Bill bill = new Bill(edtB_ID, sdf.parse(edtB_Date));
                 billDAO.inserBill(bill);
+
                 Toast.makeText(getApplicationContext(), "Đã thêm", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AddBillActivity.this, BillDetailActivity.class);
                 Bundle b = new Bundle();
