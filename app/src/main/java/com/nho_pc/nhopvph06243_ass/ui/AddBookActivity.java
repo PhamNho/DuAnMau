@@ -1,5 +1,6 @@
 package com.nho_pc.nhopvph06243_ass.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
 import com.nho_pc.nhopvph06243_ass.adapter.BookAdapter;
+import com.nho_pc.nhopvph06243_ass.adapter.TypeBookSpinnerAdapter;
 import com.nho_pc.nhopvph06243_ass.dao.BookDAO;
 import com.nho_pc.nhopvph06243_ass.dao.BookTypeDAO;
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
@@ -38,7 +40,7 @@ public class AddBookActivity extends AppCompatActivity {
     private BookDAO bookDAO;
     private BookTypeDAO bookTypeDAO;
     private String maTheLoai = "";
-    private List<BookType> listTheLoai = new ArrayList<>();
+    private List<BookType> listTheLoai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,17 +61,8 @@ public class AddBookActivity extends AppCompatActivity {
                 finish();
             }
         });
-        spnBookType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                maTheLoai = listTheLoai.get(spnBookType.getSelectedItemPosition()).getTypeID();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        listTheLoai = new BookTypeDAO(this).getAllBookType();
+        spnBookType.setAdapter(new TypeBookSpinnerAdapter(this, listTheLoai));
         //load data into form
         Intent in = getIntent();
         Bundle b = in.getExtras();
