@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
+import com.nho_pc.nhopvph06243_ass.adapter.BillAdapter;
 import com.nho_pc.nhopvph06243_ass.dao.BillDAO;
 import com.nho_pc.nhopvph06243_ass.model.Bill;
 
@@ -85,22 +87,32 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
         String edtB_ID = edtBill_Code.getText().toString().trim();
         String edtB_Date = edtBill_Date.getText().toString().trim();
         try {
-            if (edtB_ID.isEmpty() || edtB_Date.isEmpty()) {
+            if (validation() < 0) {
                 Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             } else {
-                Bill bill = new Bill(edtB_ID, sdf.parse(edtB_Date));
-                billDAO.inserBill(bill);
-
-                Toast.makeText(getApplicationContext(), "Đã thêm", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AddBillActivity.this, BillDetailActivity.class);
-                Bundle b = new Bundle();
-                b.putString("MAHOADON", edtB_ID);
-                intent.putExtras(b);
-                startActivity(intent);
-                finish();
+                Bill bill = new Bill(edtB_ID,sdf.parse(edtB_Date));
+                if (billDAO.inserBill(bill) > 0) {
+                    Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),BillDetailActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("MAHOADON", edtB_ID);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                }
             }
         } catch (Exception ex) {
+            Log.e("Error", ex.toString());
         }
+    }
+    public int validation(){
+        if
+                (edtBill_Code.getText().toString().isEmpty()||edtBill_Date.getText().toString().isEmpty()
+                ){
+            return -1;
+        }
+        return 1;
     }
 
     public void huyaddBill(View view) {

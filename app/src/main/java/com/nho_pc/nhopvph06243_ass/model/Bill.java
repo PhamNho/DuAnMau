@@ -6,6 +6,10 @@ public class Bill {
     private String maHoaDon;
     private Date ngayMua;
 
+    public Bill(String edtB_ID, String edtB_Date) {
+
+    }
+
     public Bill() {
 
     }

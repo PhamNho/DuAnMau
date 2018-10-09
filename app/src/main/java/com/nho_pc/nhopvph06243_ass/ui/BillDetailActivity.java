@@ -1,6 +1,7 @@
 package com.nho_pc.nhopvph06243_ass.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -37,12 +38,16 @@ public class BillDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Thêm hóa đơn");
         setContentView(R.layout.activity_bill_detail);
         customtoolbarBillDetail=findViewById(R.id.customtoolbarBillDetail);
         setSupportActionBar(customtoolbarBillDetail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        customtoolbarBillDetail.setTitle("Thêm hóa đơn");
+        customtoolbarBillDetail.setTitleTextColor(Color.WHITE);
+
         customtoolbarBillDetail.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
