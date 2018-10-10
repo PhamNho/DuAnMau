@@ -63,15 +63,16 @@ public class BillActivity extends AppCompatActivity {
         }
         billAdapter = new BillAdapter(this, billList);
         lvBill.setAdapter(billAdapter);
-        lvBill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvBill.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Bill bill = (Bill) parent.getItemAtPosition(position);
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bill bill = (Bill) adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(BillActivity.this, ListBillDetailByIDActivity.class);
                 Bundle b = new Bundle();
                 b.putString("MAHOADON", bill.getMaHoaDon());
                 intent.putExtras(b);
                 startActivity(intent);
+                return false;
             }
         });
         // TextFilter

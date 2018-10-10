@@ -40,7 +40,7 @@
                     android:layout_height="match_parent"
                     android:hint="Mã hóa đơn"
                     android:imeOptions="actionNext"
-                    android:inputType="text" />
+                    android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout

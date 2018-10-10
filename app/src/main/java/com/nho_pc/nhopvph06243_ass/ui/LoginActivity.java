@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
+        edtUser.setText("admin");
+        edtPassword.setText("admin123");
 //        btnLogin.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

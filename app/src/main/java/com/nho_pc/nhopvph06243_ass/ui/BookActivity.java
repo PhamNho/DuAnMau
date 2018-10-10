@@ -1,6 +1,7 @@
 package com.nho_pc.nhopvph06243_ass.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ public class BookActivity extends AppCompatActivity {
         setSupportActionBar(customtoolbarBook);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        customtoolbarBook.setTitleTextColor(Color.BLACK);
         customtoolbarBook.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

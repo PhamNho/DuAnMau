@@ -80,13 +80,27 @@ public class BillAdapter extends BaseAdapter {
             holder.imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (billDetailDAO.checkHoaDon(arrBill.get(position).getMaHoaDon())) {
-                        Toast.makeText(context, "Bạn phải xoá hoá đơn chi tiết trước khi xoá hoá đơn này", Toast.LENGTH_LONG).show();
-                    } else {
-                        billDAO.deleteBillByID(arrBill.get(position).getMaHoaDon());
-                        arrBill.remove(position);
-                        notifyDataSetChanged();
-                    }
+                    //B1: định nghĩa alertDialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    //B2: thiết lập thông tin
+                    builder.setTitle("Thông báo");
+                    builder.setMessage("Bạn có muốn xóa " + arrBill.get(position).getMaHoaDon() + " ?");
+                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            billDAO.deleteBillByID(arrBill.get(position).getMaHoaDon());
+                            arrBill.remove(position);
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    //B3: hiển thị
+                    builder.show();
                 }
             });
             convertView.setTag(holder);

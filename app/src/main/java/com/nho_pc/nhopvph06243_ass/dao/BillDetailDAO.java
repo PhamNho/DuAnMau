@@ -72,8 +72,7 @@ public class BillDetailDAO implements Constant {
     // lấy ra tất cả hóa đơn chi tiết
     public List<BillDetail> getAllBillDetailByID(String billID) {
         List<BillDetail> billDetailList = new ArrayList<>();
-        String sSQL = "SELECT billdetailID, bill.billID,bill.datebill, " +
-                "book.bookID, book.typeID, book.bookname, book.tacgia, book.nxb, book.giabia, " +
+        String sSQL = "SELECT billdetailID, bill.billID,bill.datebill,book.bookID, book.typeID, book.bookname, book.tacgia, book.nxb, book.giabia, " +
                 "book.soluong,billdetail.somuongmua FROM billdetail INNER JOIN bill " +
                 "on billdetail.billID = bill.billID INNER JOIN book on book.booID = billdetail.bookID where billdetail.billID='" + billID + "'";
         Cursor c = db.rawQuery(sSQL, null);
@@ -112,7 +111,7 @@ public class BillDetailDAO implements Constant {
 
     //delete
     public int deleteHoaDonChiTietByID(int maHDCT) {
-        int result = db.delete(TABLE_NAME, COLUMN_BILLDETAIL_ID+"=?", new String[]{String.valueOf(maHDCT)});
+        int result = db.delete(TABLE_NAME, COLUMN_BILLDETAIL_ID+"=?", new String[]{maHDCT+""});
         if (result == 0)
             return -1;
         return 1;

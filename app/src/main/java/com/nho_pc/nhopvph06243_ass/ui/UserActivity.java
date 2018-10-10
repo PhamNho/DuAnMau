@@ -41,6 +41,7 @@ public class UserActivity extends AppCompatActivity {
         setSupportActionBar(customtoolbarUser);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        customtoolbarUser.setTitleTextColor(Color.BLACK);
         customtoolbarUser.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -93,7 +93,7 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
                 Bill bill = new Bill(edtB_ID,sdf.parse(edtB_Date));
                 if (billDAO.inserBill(bill) > 0) {
                     Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(),BillDetailActivity.class);
+                    Intent intent = new Intent();
                     Bundle b = new Bundle();
                     b.putString("MAHOADON", edtB_ID);
                     intent.putExtras(b);
@@ -105,6 +105,7 @@ public class AddBillActivity extends AppCompatActivity implements DatePickerDial
         } catch (Exception ex) {
             Log.e("Error", ex.toString());
         }
+        finish();
     }
     public int validation(){
         if

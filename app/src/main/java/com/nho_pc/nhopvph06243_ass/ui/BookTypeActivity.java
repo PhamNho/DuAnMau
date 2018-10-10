@@ -2,6 +2,7 @@ package com.nho_pc.nhopvph06243_ass.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +39,7 @@ public class BookTypeActivity extends AppCompatActivity {
         setSupportActionBar(customtoolbarBookType);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        customtoolbarBookType.setTitleTextColor(Color.BLACK);
         customtoolbarBookType.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
