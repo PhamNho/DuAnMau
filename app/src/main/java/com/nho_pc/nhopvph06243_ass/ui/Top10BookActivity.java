@@ -1,7 +1,6 @@
 package com.nho_pc.nhopvph06243_ass.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.nho_pc.nhopvph06243_ass.R;
@@ -25,7 +23,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Top10BookActivity extends AppCompatActivity {
-    private Toolbar customtoolbarTop10Book;
     private RecyclerView lvListBestBookSelling;
     private List<Book> bookList;
     private Top10BookAdapter top10BookAdapter;
@@ -78,13 +75,13 @@ public class Top10BookActivity extends AppCompatActivity {
         lvListBestBookSelling.setLayoutManager(manager);
     }
     private void initViews(){
-        customtoolbarTop10Book = findViewById(R.id.customtoolbarTop10Book);
-        setSupportActionBar(customtoolbarTop10Book);
+        Toolbar customToolbarTop10Book = findViewById(R.id.customtoolbarTop10Book);
+        setSupportActionBar(customToolbarTop10Book);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        customtoolbarTop10Book.setTitleTextColor(Color.WHITE);
-        customtoolbarTop10Book.setNavigationIcon(R.drawable.ic_back);
-        customtoolbarTop10Book.setNavigationOnClickListener(new View.OnClickListener() {
+        customToolbarTop10Book.setTitleTextColor(Color.WHITE);
+        customToolbarTop10Book.setNavigationIcon(R.drawable.ic_back);
+        customToolbarTop10Book.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
