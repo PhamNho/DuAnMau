@@ -26,6 +26,7 @@ public class StatisticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        setTitle(getString(R.string.title_statistics));
         initView();
         StatisticsDAO statisticDAO = new StatisticsDAO(this);
         tvStatisticDay.setText(statisticDAO.getStatisticByDay()+" VNĐ");
@@ -45,6 +46,8 @@ public class StatisticsActivity extends AppCompatActivity {
         setSupportActionBar(customtoolbarStatistics);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        customtoolbarStatistics.setNavigationIcon(R.drawable.ic_back);
+        customtoolbarStatistics.setTitleTextColor(Color.WHITE);
         tvStatisticDay = findViewById(R.id.tvMoneyToday);
         tvStatisticMonth = findViewById(R.id.tvMoneyMonth);
         tvStatisticYear = findViewById(R.id.tvMoneyYear);
