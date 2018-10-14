@@ -1,54 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" android:layout_marginBottom="8dp"
-    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="8dp"
+    android:orientation="vertical"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/imgAvatarBill"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_bill" />
-
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvBillID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="BillID"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvBillDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="BillDate" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.8"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        tools:ignore="UselessParent">
 
         <ImageView
-            android:id="@+id/imgDeleteBill"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_delete" />
+            android:id="@+id/imgAvatar_HoaDon"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_bill"
+            tools:ignore="ContentDescription" />
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tvBill_ID_Item_Bill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDate_Item_Bill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgEdit_itemBill"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_edit"
+            android:layout_weight="0.2"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/imgDelete_itemBill"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_delete"
+            android:layout_weight="0.2"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 </LinearLayout>

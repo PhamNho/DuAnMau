@@ -1,9 +1,12 @@
 package com.nho_pc.nhopvph06243_ass.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,139 +19,95 @@ import android.widget.TextView;
 import com.nho_pc.nhopvph06243_ass.R;
 import com.nho_pc.nhopvph06243_ass.dao.BookDAO;
 import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
+import com.nho_pc.nhopvph06243_ass.listener.OnDelete;
+import com.nho_pc.nhopvph06243_ass.listener.OnEdit;
 import com.nho_pc.nhopvph06243_ass.model.Book;
 import com.nho_pc.nhopvph06243_ass.ui.BookActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookAdapter extends BaseAdapter implements Filterable {
-    List<Book> arrBook;
-    List<Book> arrSortBook;
-    private Filter bookFilter;
-    public Activity context;
-    public LayoutInflater inflater;
-    BookDAO bookDAO;
-    public BookAdapter(Activity context, List<Book> arrayBook) {
-        super();
-        this.context = context;
-        this.arrBook = arrayBook;
-        this.arrSortBook = arrayBook;
-        this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        bookDAO = new BookDAO(context);
-    }
-    @Override
-    public int getCount() {
-        return arrBook.size();
-    }
-    @Override
-    public Object getItem(int position) {
-        return arrBook.get(position);
-    }
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-    public static class ViewHolder {
-        ImageView img;
-        TextView txtBookName;
-        TextView txtBookPrice;
-        TextView txtSoLuong;
-        ImageView imgDelete;
-    }
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if(convertView==null)
-        {
-            holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_book, null);
-            holder.img = (ImageView) convertView.findViewById(R.id.imgAvatarBook);
-            holder.txtBookName = (TextView) convertView.findViewById(R.id.tvBookName);
-            holder.txtSoLuong = (TextView) convertView.findViewById(R.id.tvSoLuongBook);
-            holder.txtBookPrice=convertView.findViewById(R.id.tvBookPrice);
-            holder.imgDelete = (ImageView) convertView.findViewById(R.id.imgDeleteBook);
-            holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //B1: định nghĩa alertDialog
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    //B2: thiết lập thông tin
-                    builder.setTitle("Thông báo");
-                    builder.setMessage("Bạn có muốn xóa " + arrBook.get(position).getTenSach() + " ?");
-                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            bookDAO.deleteBookByID(arrBook.get(position).getMaSach());
-                            arrBook.remove(position);
-                            notifyDataSetChanged();
-                        }
-                    });
-                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
+    private List<Book> bookList;
+    private final OnDelete onDelete;
+    private final OnEdit onEdit;
 
-                        }
-                    });
-                    //B3: hiển thị
-                    builder.show();
-                }
-            });
-            convertView.setTag(holder);
-        } else
-            holder = (ViewHolder) convertView.getTag();
-        Book _entry = (Book) arrBook.get(position);
-        holder.img.setImageResource(R.drawable.ic_book);
-        holder.txtBookName.setText("Mã sách: "+_entry.getMaSach());
-        holder.txtSoLuong.setText("Số lượng: "+_entry.getSoLuong());
-        holder.txtBookPrice.setText("Giá: "+ _entry.getGiaBia());
-        return convertView;
+    public BookAdapter(List<Book> bookList, OnDelete onDelete, OnEdit onEdit) {
+        this.bookList = bookList;
+        this.onDelete = onDelete;
+        this.onEdit = onEdit;
     }
+
+    @NonNull
     @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View itemView = inflater.inflate(R.layout.item_book,parent,false);
+        return new ViewHolder(itemView);
+    }
+
+    @SuppressLint({"RecyclerView", "SetTextI18n"})
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        Book book = bookList.get(position);
+        if(book.getBookName().length()>20){
+            String name = "Tên: "+book.getBookName().substring(0,20)+"...";
+            holder.tvName.setText(name);
+        }else{
+            holder.tvName.setText("Tên: "+book.getBookName());
+        }
+        if(book.getQuantity().length()>5){
+            String name =book.getQuantity().substring(0,5)+"...";
+            holder.tvQuantity.setText(name);
+        }else{
+            holder.tvQuantity.setText(book.getQuantity());
+        }
+        if(book.getBookID().length()>12){
+            String name = book.getBookID().substring(0,12)+"...";
+            holder.tvBooK_ID.setText(name);
+        }else{
+            holder.tvBooK_ID.setText(book.getBookID());
+        }
+
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDelete.onDelete(position);
+            }
+        });
+        holder.imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onEdit.onEdit(position);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        if (bookList == null) return 0;
+        return bookList.size();
     }
     public void changeDataset(List<Book> items){
-        this.arrBook = items;
+        this.bookList = items;
         notifyDataSetChanged();
     }
-    public void resetData() {
-        arrBook = arrSortBook;
-    }
-    public Filter getFilter() {
-        if (bookFilter == null)
-            bookFilter = new CustomFilter();
-        return bookFilter;
-    }
-    private class CustomFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-// We implement here the filter logic
-            if (constraint == null || constraint.length() == 0) {
-                results.values = arrSortBook;
-                results.count = arrSortBook.size();
-            }
-            else {
-                List<Book> bookList = new ArrayList<Book>();
-                for (Book p : arrBook) {
-                    if (p.getMaSach().toUpperCase().startsWith(constraint.toString().toUpperCase()))
-                        bookList.add(p);
-                }
-                results.values = bookList;
-                results.count = bookList.size();
-            }
-            return results;
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        final ImageView imgEdit;
+        final ImageView imgDelete;
+        final TextView tvName;
+        final TextView tvQuantity;
+        final TextView tvBooK_ID;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            tvName = itemView.findViewById(R.id.tvBook_Name_Item_Book);
+            tvQuantity = itemView.findViewById(R.id.tvQuality_Item_Book);
+            tvBooK_ID =itemView.findViewById(R.id.tvBook_ID_Item_Book);
+            imgEdit = itemView.findViewById(R.id.imgEdit_Item_Book);
+            imgDelete = itemView.findViewById(R.id.imgDelete_Item_Book);
         }
-        @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
-            if (results.count == 0)
-                notifyDataSetInvalidated();
-            else {
-                arrBook = (List<Book>) results.values;
-                notifyDataSetChanged();
-            }
-        }
+
     }
 }

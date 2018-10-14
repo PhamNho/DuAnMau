@@ -1,55 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/imgAvatarUser"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_avatar_user" />
-
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="Pham Van Nho"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvPhoneNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="0962387053" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.8"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        tools:ignore="UselessParent">
 
         <ImageView
-            android:id="@+id/imgDeleteUser"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_delete" />
+            android:id="@+id/imgAvatar_NguoiDung"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_avatar_user"
+            tools:ignore="ContentDescription" />
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tvUser_Name_Item_User"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPhone_Item_User"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgEdit_Item_User"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.25"
+            android:src="@drawable/ic_edit"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imgDelete_Item_User"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.25"
+            android:src="@drawable/ic_delete"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 </LinearLayout>

@@ -5,37 +5,35 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.nho_pc.nhopvph06243_ass.dao.BillDAO;
-//import com.nho_pc.nhopvph06243_ass.dao.BillDetailDAO;
-import com.nho_pc.nhopvph06243_ass.dao.BillDetailDAO;
-import com.nho_pc.nhopvph06243_ass.dao.BookDAO;
-import com.nho_pc.nhopvph06243_ass.dao.BookTypeDAO;
-import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
 import com.nho_pc.nhopvph06243_ass.listener.Constant;
-import com.nho_pc.nhopvph06243_ass.model.Book;
 
-public class DatabaseHelper extends SQLiteOpenHelper implements Constant{
+public class DatabaseHelper extends SQLiteOpenHelper implements Constant {
 
-    public static final String DATABASE_NAME = "dbBookManager";
-    public static final int VERSION = 1;
+
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, VERSION);
+        super(context, "BookManager", null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL(CREATE_USER_TABLE);
+        sqLiteDatabase.execSQL(CREATE_TYPE_TABLE);
+        sqLiteDatabase.execSQL(CREATE_BOOK_TABLE);
+        sqLiteDatabase.execSQL(CREATE_BILL_TABLE);
+        sqLiteDatabase.execSQL(CREATE_BILL_DETAIL_TABLE);
+        if (isDEBUG) Log.e("CREATE_USER_TABLE", CREATE_USER_TABLE);
+        if (isDEBUG) Log.e("CREATE_TYPE_TABLE", CREATE_TYPE_TABLE);
+        if (isDEBUG) Log.e("CREATE_BOOK_TABLE", CREATE_BOOK_TABLE);
+        if(isDEBUG)Log.e("CREATE_BILL_TABLE",CREATE_BILL_TABLE);
+        if(isDEBUG)Log.e("CREATE_BILL_DETAIL",CREATE_BILL_DETAIL_TABLE);
     }
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(UserDAO.CREATE_USER_TABLE);
-        db.execSQL(BookTypeDAO.CREATE_BOOK_TYPE_TABLE);
-        db.execSQL(BookDAO.CREATE_BOOK_TABLE);
-        db.execSQL(BillDAO.CREATE_BILL_TABLE);
-        db.execSQL(BillDAO.CREATE_BILLDETAIL_TABLE);
-    }
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("Drop table if exists "+UserDAO.TABLE_NAME);
-        db.execSQL("Drop table if exists "+BookTypeDAO.TABLE_NAME);
-        db.execSQL("Drop table if exists "+BookDAO.TABLE_NAME);
-        db.execSQL("Drop table if exists "+BillDAO.TABLE_NAME);
-        db.execSQL("Drop table if exists "+BillDetailDAO.TABLE_NAME);
-        onCreate(db);
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TYPE_BOOK_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + BOOK_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + BILL_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + BILL_DETAIL_TABLE);
+        onCreate(sqLiteDatabase);
     }
 }

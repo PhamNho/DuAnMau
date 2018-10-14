@@ -1,5 +1,6 @@
 package com.nho_pc.nhopvph06243_ass.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ public class TypeBookSpinnerAdapter extends BaseAdapter {
 
 
     public Context context;
-    public List<BookType> bookTypeList;
+    private List<BookType> bookTypeList;
 
     public TypeBookSpinnerAdapter(Context context, List<BookType> bookTypeList) {
         this.context = context;
@@ -39,12 +40,13 @@ public class TypeBookSpinnerAdapter extends BaseAdapter {
     }
 
 
+    @SuppressLint({"SetTextI18n", "ViewHolder"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(context).inflate(R.layout.type_book_spinner, viewGroup, false);
         TextView tvName;
         tvName = view.findViewById(R.id.tvName);
-        tvName.setText(i + "  |  " + bookTypeList.get(i).getTypeName());
+        tvName.setText(i + "  |  " + bookTypeList.get(i).getName());
         return view;
     }
 

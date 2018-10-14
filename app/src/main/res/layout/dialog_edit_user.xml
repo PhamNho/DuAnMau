@@ -1,47 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.EditUserActivity">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/customtoolbarEditUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:titleTextColor="#ffffff" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            tools:ignore="ScrollViewSize">
 
             <ImageView
                 android:layout_width="300dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="30dp"
-                android:src="@drawable/logo_nhasachphuongnam" />
+                android:src="@drawable/logo_nhasachphuongnam"
+                tools:ignore="ContentDescription" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:counterMaxLength="50"
+                app:counterEnabled="true">
 
                 <EditText
-                    android:id="@+id/edtEditName"
+                    android:id="@+id/edtUserName_Dialog_Edit_User"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Họ Và Tên"
                     android:imeOptions="actionNext"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    tools:ignore="Autofill,HardcodedText" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -50,12 +48,13 @@
                 android:layout_marginBottom="30dp">
 
                 <EditText
-                    android:id="@+id/edtEditPhoneNumber"
+                    android:id="@+id/edtPhoneNumber_Dialog_Edit_User"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Số điện thoại"
                     android:imeOptions="actionDone"
-                    android:inputType="text" />
+                    android:inputType="number"
+                    tools:ignore="Autofill,HardcodedText,TextFields" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -64,22 +63,24 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnEditUsser"
+                    android:id="@+id/btnEdit_Dialog_Edit_User"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:text="Sửa"
-                    android:textAllCaps="false" />
+                    android:text="@string/edit"
+                    android:textAllCaps="false"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
+                    android:id="@+id/btnCancel_Dialog_Edit_User"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:onClick="huyEditUser"
-                    android:text="Hủy"
-                    android:textAllCaps="false" />
+                    android:text="@string/cancel"
+                    android:textAllCaps="false"
+                    tools:ignore="ButtonStyle"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

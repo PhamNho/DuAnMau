@@ -1,12 +1,9 @@
 package com.nho_pc.nhopvph06243_ass.ui;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,146 +11,103 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
-
-import com.nho_pc.nhopvph06243_ass.adapter.UserAdapter;
 import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
-import com.nho_pc.nhopvph06243_ass.database.DatabaseHelper;
 import com.nho_pc.nhopvph06243_ass.model.Users;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText edtUser;
     private EditText edtPassword;
     private CheckBox cbRemember;
-    private Button btnLogin;
-
     private UserDAO userDAO;
-    private String strUser, strPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        initViews();
-        edtUser.setText("admin");
-        edtPassword.setText("admin123");
-//        btnLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String userName = edtUser.getText().toString().trim();
-//                String password = edtPassword.getText().toString().trim();
-//                if (password.length() < 6 || userName.isEmpty() || password.isEmpty()) {
-//
-//                    if (userName.isEmpty()) edtUser.setError(getString(R.string.notify_empty_user));
-//
-//                    if (password.length() < 6)
-//                        edtPassword.setError(getString(R.string.notify_length_pass));
-//
-//                    if (password.isEmpty())
-//                        edtPassword.setError(getString(R.string.notify_empty_pass));
-//
-//                } else {
-//
-//                    // kiem tra user da ton tai trong DB chua !!!
-//                    Users user = userDAO.getUser(edtUser.getText().toString().trim());
-//                    if (user == null) {
-//                        Toast.makeText(getApplicationContext(), "User chưa tồn tại !!!", Toast.LENGTH_LONG).show();
-//                        Users user1 = new Users("admin", "admin123", "Phạm Văn Nhớ", "0962387053");
-//                        userDAO.insertUser(user1);
-//                    } else {
-//                        if (cbRemember.isChecked()) {
-//                            editor = sharedPreferences.edit();
-//                            editor.putString(USERNAME_KEY, edtUser.getText().toString().trim());
-//                            editor.putString(PASSWORD_KEY, edtPassword.getText().toString().trim());
-//                            editor.commit();
-//                        }
-//                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                        Toast.makeText(getApplicationContext(), "Xin chào : " + user.getName(), Toast.LENGTH_LONG).show();
-//                    }
-//
-//
-////                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-////                    final int[] a = {0};
-////
-////                    progressDialog.setTitle("Đang đăng nhập");
-////                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-////
-////
-////                    CountDownTimer countDownTimer = new CountDownTimer(1500, 40) {
-////                        @Override
-////                        public void onTick(long millisUntilFinished) {
-////                            a[0] = a[0] + 4;
-////                            progressDialog.show();
-////                            progressDialog.setProgress(a[0]);
-////                        }
-////
-////                        @Override
-////                        public void onFinish() {
-////                            progressDialog.dismiss();
-////                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-////                        }
-////                    }.start();
-//                }
-//
-//            }
-//        });
+        edtUser = findViewById(R.id.edtUser);
+        edtPassword = findViewById(R.id.edtPassword);
+        cbRemember = findViewById(R.id.cbRemember);
+        Button btnLogin = findViewById(R.id.btnLogin);
+        cbRemember.setChecked(true);
+        userDAO = new UserDAO(this);
+        getUser();
 
+        Users user2 = userDAO.getUser("ADMIN");
+        if (user2 == null) {
+            userDAO.insertUser("ADMIN", "123456", "Admin", "0962387053");
+        }
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                strUser = edtUser.getText().toString().trim();
-                strPass = edtPassword.getText().toString().trim();
-                if (strPass.length() < 6 || strUser.isEmpty() || strPass.isEmpty()) {
-
-                    if (strUser.isEmpty()) edtUser.setError(getString(R.string.notify_empty_user));
-
-                    if (strPass.length() < 6)
-                        edtPassword.setError(getString(R.string.notify_length_pass));
-
-                    if (strPass.isEmpty())
+                String user = edtUser.getText().toString().trim();
+                String pass = edtPassword.getText().toString().trim();
+                if (user.isEmpty() || pass.isEmpty()) {
+                    if (user.isEmpty()) {
+                        edtUser.setError(getString(R.string.notify_empty_user));
+                    }
+                    if (pass.isEmpty()) {
                         edtPassword.setError(getString(R.string.notify_empty_pass));
-
+                    }
+                } else if (pass.length() < 6) {
+                    edtPassword.setError(getString(R.string.notify_length_pass));
                 } else {
-//                  kiem tra user da ton tai trong DB chua !!!
-                    Users user = userDAO.getUserByID(strUser,strPass);
-                    if (user == null) {
-                        Toast.makeText(getApplicationContext(), "User chưa tồn tại !!!", Toast.LENGTH_LONG).show();
-                        Users user1 = new Users("admin", "admin123", "Phạm Văn Nhớ", "0962387053");
-                        userDAO.insertUser(user1);
+                    Users user2 = userDAO.getUser(edtUser.getText().toString().trim().toUpperCase());
+                    if (user2 == null) {
+                        edtUser.setError(getString(R.string.user_not_exitst));
                     } else {
-                        SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
-                        SharedPreferences.Editor edit = pref.edit();
-                        if (cbRemember.isChecked()) {
-                            // lưu dữ liệu
-                            edit.putString("USERNAME", strUser);
-                            edit.putString("PASSWORD", strPass);
-                            edit.commit();
+                        if (user2.getPassword().equals(edtPassword.getText().toString().trim())) {
+                            reUser(edtUser.getText().toString().trim(), edtPassword.getText().toString().trim(), cbRemember.isChecked());
+                            reUser(edtUser.getText().toString().trim(), edtPassword.getText().toString().trim());
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            Toast.makeText(LoginActivity.this, getText(R.string.hello)+" "+user2.getName(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            edtPassword.setError(getString(R.string.wrong_pass));
                         }
-                        else {
-                            // xóa tính trạng lữu trữ trước đó
-                            edit.clear();
-                            edit.commit();
-                        }
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                        Toast.makeText(getApplicationContext(), "Xin chào : " + user.getName(), Toast.LENGTH_LONG).show();
+
                     }
                 }
             }
         });
     }
 
-    private void initViews() {
-        edtUser = findViewById(R.id.edtUser);
-        edtPassword = findViewById(R.id.edtPassword);
-        cbRemember = findViewById(R.id.cbRemember);
-        btnLogin = findViewById(R.id.btnLogin);
-        userDAO = new UserDAO(LoginActivity.this);
-    }
 
     public void huyLogin(View view) {
         finish();
+    }
+
+    private void reUser(String u, String p, boolean status) {
+        SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        if (!status) {
+            edit.clear();
+        } else {
+            edit.putString("UserName", u);
+            edit.putString("PassWord", p);
+        }
+        edit.apply();
+    }
+
+    private void getUser() {
+        SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        if (pref != null) {
+            String strUserName = pref.getString("UserName", "");
+            String strPassWord = pref.getString("PassWord", "");
+            edtPassword.setText(strPassWord);
+            edtUser.setText(strUserName);
+        }
+    }
+
+    private void reUser(String u, String p) {
+        SharedPreferences pref = getSharedPreferences("USER_FILE2", MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString("UserName", u);
+        edit.putString("PassWord", p);
+        edit.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUser();
     }
 }

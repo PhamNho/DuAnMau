@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,85 +15,45 @@
         app:titleTextColor="#ffffff" />
 
     <LinearLayout
+        android:padding="12dp"
+        android:layout_below="@id/customtoolbarBillDetail"
+        android:orientation="horizontal"
+        android:id="@+id/row"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="vertical">
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edMaHoaDon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Mã hóa đơn" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edMaSach"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Mã sách" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edSoLuongMua"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Số Lượng"
-                android:inputType="number" />
-        </android.support.design.widget.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="ADDBillDetail"
-                android:text="Thêm" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="thanhToanHoaDon"
-                android:text="Thanh Toán" />
-        </LinearLayout>
+        android:layout_height="wrap_content">
 
         <TextView
-            android:paddingLeft="5dp"
-            android:id="@+id/tvThanhTien"
-            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Thành tiền:"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="36px"
-            android:textStyle="bold" />
+            tools:ignore="HardcodedText" />
 
-        <ListView
-            android:id="@+id/lvBillDetail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-
-        </ListView>
+        <TextView
+            android:id="@+id/tvRevenue"
+            android:textSize="20sp"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
     </LinearLayout>
-
-</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/row"
+        android:id="@+id/rvListBillDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_alignParentEnd="true"
+        app:fabSize="mini"
+        android:id="@+id/fbtn_Bill_Detail"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorAccent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_add"/>
+</RelativeLayout>

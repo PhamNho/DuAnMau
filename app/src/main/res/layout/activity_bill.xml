@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,30 +17,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="55dp">
+        android:layout_below="@+id/customtoolbarBill">
 
-        <EditText
-            android:id="@+id/edtSearch"
+        <android.support.design.widget.TextInputLayout
+            android:padding="8dp"
+            android:id="@+id/text_input_search_bill"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="Tìm kiếm"
-            android:inputType="number"/>
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtSearchBill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search"
+                android:inputType="number"
+                tools:ignore="Autofill" />
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/lvBill"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvBill"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="110dp"></ListView>
+        android:layout_marginTop="110dp">
+    </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:onClick="addBills"
-        android:padding="0dp"
-        android:src="@mipmap/ic_add" />
+        android:layout_alignParentEnd="true"
+        app:fabSize="mini"
+        android:id="@+id/fbtn_Bill"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorAccent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/ic_add"/>
 
-</FrameLayout>
+</RelativeLayout>

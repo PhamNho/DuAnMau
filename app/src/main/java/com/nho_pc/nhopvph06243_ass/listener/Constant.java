@@ -2,80 +2,71 @@ package com.nho_pc.nhopvph06243_ass.listener;
 
 public interface Constant {
     boolean isDEBUG = true;
-
-    // TABLE USER
+    //Table User
     String USER_TABLE = "users";
     String COLUMN_USERNAME = "username";
     String COLUMN_PASSWORD = "password";
     String COLUMN_NAME = "name";
-    String COLUMN_PHONE_NUMBER = "phonenumber";
+    String COLUMN_PHONE_NUMBER = "phone_number";
 
-    String CREATE_USER_TABLE = "CREATE TABLE " + USER_TABLE + "(" +
-            COLUMN_USERNAME + " VARCHAR PRIMARY KEY NOT NULL," +
-            COLUMN_PASSWORD + " VARCHAR NOT NULL," +
-            COLUMN_NAME + " VARCHAR NOT NULL," +
-            COLUMN_PHONE_NUMBER + " VARCHAR NOT NULL" +
+    String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS " + USER_TABLE + "(" +
+            COLUMN_USERNAME + " VARCHAR PRIMARY KEY," +
+            COLUMN_PASSWORD + " VARCHAR," +
+            COLUMN_NAME + " VARCHAR," +
+            COLUMN_PHONE_NUMBER + " VARCHAR" +
+            ")";
+    //Table TypeBook
+    String TYPE_BOOK_TABLE = "TypeBooks";
+    String TB_COLUMN_TYPE_BOOK_ID = "_id";
+    String TB_COLUMN_TYPE_NAME = "TypeName";
+    String TB_COLUMN_DESCRIPTION = "Description";
+    String TB_COLUMN_POSITION = "Position";
+
+    String CREATE_TYPE_TABLE = "CREATE TABLE IF NOT EXISTS " + TYPE_BOOK_TABLE + "(" +
+            "" + TB_COLUMN_TYPE_BOOK_ID + " VARCHAR PRIMARY KEY," +
+            "" + TB_COLUMN_TYPE_NAME + " VARCHAR," +
+            "" + TB_COLUMN_DESCRIPTION + " VARCHAR," +
+            "" + TB_COLUMN_POSITION + " VARCHAR" +
             ")";
 
-    //===============
+    //Talbe Book
+    String BOOK_TABLE = "Books";
+    String TB_COLUMN_BOOK_ID = "BookID";
+    String TB_COLUMN_BOOK_NAME = "BookName";
+    String TB_COLUMN_AUTHOR = "Author";
+    String TB_COLUMN_NXB = "NXB";
+    String TB_COLUMN_PRICE = "Price";
+    String TB_COLUMN_QUANTITY = "Quantity";
 
-    // TABLE BOOK TYPE
-    String TYPE_TABLE = "booktype";
-    String COLUMN_TYPE_ID = "typeID";
-    String COLUMN_TYPE_NAME = "typename";
-    String COLUMN_DESCRIPTION = "description";
-    String COLUMN_POSITION = "position";
-
-    String CREATE_BOOK_TYPE_TABLE = "CREATE TABLE " + TYPE_TABLE + "(" +
-            COLUMN_TYPE_ID + " CHAR(5) PRIMARY KEY," +
-            COLUMN_TYPE_NAME + " NVARCHAR(50)," +
-            COLUMN_DESCRIPTION + " NVARCHAR(255)," +
-            COLUMN_POSITION + " INT" +
-            ")";
-    //===============
-
-    // TABLE BOOK
-    String BOOK_TABLE = "book";
-    String COLUMN_BOOK_ID = "bookID";
-    String COLUMN_BOOK_NAME = "bookname";
-    String COLUMN_TAC_GIA = "tacgia";
-    String COLUMN_NXB = "nxb";
-    String COLUMN_GIA_BIA = "giabia";
-    String COLUMN_SO_LUONG = "soluong";
-
-    String CREATE_BOOK_TABLE = "CREATE TABLE " + BOOK_TABLE + "(" +
-            COLUMN_BOOK_ID + " VARCHAR PRIMARY KEY," +
-            COLUMN_TYPE_ID + " CHAR(5) NOT NULL," +
-            COLUMN_BOOK_NAME + " VARCHAR NOT NULL," +
-            COLUMN_TAC_GIA + " VARCHAR NOT NULL," +
-            COLUMN_NXB + " VARCHAR NOT NULL," +
-            COLUMN_GIA_BIA + " DOUBLE NOT NULL," +
-            COLUMN_SO_LUONG + " INT NOT NULL" +
+    String CREATE_BOOK_TABLE = "CREATE TABLE IF NOT EXISTS " + BOOK_TABLE + "(" +
+            "" + TB_COLUMN_BOOK_ID + " VARCHAR PRIMARY KEY," +
+            "" + TB_COLUMN_TYPE_BOOK_ID + " VARCHAR," +
+            "" + TB_COLUMN_BOOK_NAME + " VARCHAR," +
+            "" + TB_COLUMN_AUTHOR + " VARCHAR," +
+            "" + TB_COLUMN_NXB + " VARCHAR," +
+            "" + TB_COLUMN_PRICE + " VARCHAR," +
+            "" + TB_COLUMN_QUANTITY + " VARCHAR" +
             ")";
 
-    //===============
+    //Table Bill
+    String BILL_TABLE = "Bill";
+    String TB_COLUMN_BILL_ID = "BillID";
+    String TB_COLUMN_BILL_DATE = "BillDate";
 
-    // TABLE BILL
-    String BILL_TABLE = "bill";
-    String COLUMN_BILL_ID = "billID";
-    String COLUMN_DATE_BILL = "datebill";
-
-    String CREATE_BILL_TABLE = "CREATE TABLE " + BILL_TABLE + "(" +
-            COLUMN_BILL_ID + " VARCHAR PRIMARY KEY NOT NULL," +
-            COLUMN_DATE_BILL + " DATE NOT NULL," +
-            COLUMN_BOOK_ID + " VARCHAR" +
+    String CREATE_BILL_TABLE = "CREATE TABLE IF NOT EXISTS " + BILL_TABLE + "(" +
+            "" + TB_COLUMN_BILL_ID + " VARCHAR PRIMARY KEY," +
+            "" + TB_COLUMN_BILL_DATE + " VARCHAR" +
             ")";
 
-    //===============
+    //Table BillDetai
 
-    // TABLE BILLDETAIL
-    String BILLDETAIL_TABLE = "billdetail";
-    String COLUMN_BILLDETAIL_ID = "billdetailID";
-    String COLUMN_SO_LUONG_MUA ="somuongmua";
-    String CREATE_BILLDETAIL_TABLE = "CREATE TABLE " + BILLDETAIL_TABLE + "(" +
-            COLUMN_BILLDETAIL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            COLUMN_BILL_ID + " VARCHAR NOT NULL," +
-            COLUMN_BOOK_ID + " VARCHAR," +
-            COLUMN_SO_LUONG_MUA + " INT NOT NULL" +
+    String BILL_DETAIL_TABLE = "BillDetail";
+    String TB_COLUMN_BILL_DETAIL_ID = "_id";
+
+    String CREATE_BILL_DETAIL_TABLE = "CREATE TABLE IF NOT EXISTS " + BILL_DETAIL_TABLE + "(" +
+            "" + TB_COLUMN_BILL_DETAIL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "" + TB_COLUMN_BILL_ID + " VARCHAR," +
+            "" + TB_COLUMN_BOOK_ID + " VARCHAR," +
+            "" + TB_COLUMN_QUANTITY + " VARCHAR" +
             ")";
 }

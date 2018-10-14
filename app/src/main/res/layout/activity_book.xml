@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,39 +9,43 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/customtoolbarBook"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:titleTextColor="#ffffff" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
 
-    <LinearLayout
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TextInputLayout
+        android:padding="8dp"
+        android:id="@+id/text_input_search_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="5"
-        android:layout_marginTop="55dp">
-
+        android:layout_below="@+id/customtoolbarBook">
         <EditText
-            android:id="@+id/edSearchBook"
+            android:id="@+id/edtSearchBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="Tìm kiếm" />
-    </LinearLayout>
+            android:hint="@string/search"
+            android:inputType="number"
+            tools:ignore="Autofill" />
+    </android.support.design.widget.TextInputLayout>
 
-    <ListView
-        android:id="@+id/lvBook"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvBook"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="110dp">
-    </ListView>
+        android:layout_below="@+id/text_input_search_book">
+
+    </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:onClick="addBooks"
-        android:padding="0dp"
-        android:src="@mipmap/ic_add" />
-
-</FrameLayout>
+        android:id="@+id/fbtn_Book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:src="@mipmap/ic_add"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="mini" />
+</RelativeLayout>

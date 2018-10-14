@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AddBookTypeActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/customtoolbarAddBook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:titleTextColor="#ffffff" />
     
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
             <ImageView
@@ -27,30 +21,37 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="30dp"
-                android:src="@drawable/logo_nhasachphuongnam" />
+                android:src="@drawable/logo_nhasachphuongnam"
+                tools:ignore="ContentDescription" />
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:counterMaxLength="5"
+                app:counterEnabled="true">
 
                 <EditText
                     android:id="@+id/edtBookTypeID"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Mã thể loại"
+                    android:hint="@string/typebookID"
                     android:imeOptions="actionNext"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    tools:ignore="Autofill" />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:counterMaxLength="50"
+                app:counterEnabled="true">
 
                 <EditText
                     android:id="@+id/edtBookTypeName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Tên thể loại"
+                    android:hint="@string/typebookName"
                     android:imeOptions="actionNext"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    tools:ignore="Autofill" />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -60,9 +61,10 @@
                     android:id="@+id/edtPositionType"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Vị trí"
+                    android:hint="@string/position"
                     android:imeOptions="actionNext"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    tools:ignore="Autofill" />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -75,7 +77,8 @@
                     android:layout_height="match_parent"
                     android:hint="Mô tả"
                     android:imeOptions="actionDone"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    tools:ignore="Autofill,HardcodedText" />
             </android.support.design.widget.TextInputLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,22 +86,24 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:onClick="addBookType"
+                    android:id="@+id/btnAdd_Dialog_Add_Book_Type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:text="Thêm"
-                    android:textAllCaps="false" />
+                    android:text="@string/adđ"
+                    android:textAllCaps="false"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
+                    android:id="@+id/btnCancel_Dialog_Add_Book_Type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:onClick="huyaddBookType"
-                    android:text="Hủy"
-                    android:textAllCaps="false" />
+                    android:text="@string/cancel"
+                    android:textAllCaps="false"
+                    tools:ignore="ButtonStyle" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

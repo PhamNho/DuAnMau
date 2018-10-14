@@ -4,22 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.AddBillActivity">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/customtoolbarAddBill"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary" />
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -28,19 +22,23 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="30dp"
-                android:src="@drawable/logo_nhasachphuongnam" />
+                android:src="@drawable/logo_nhasachphuongnam"
+                tools:ignore="ContentDescription" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="7">
 
                 <EditText
                     android:id="@+id/edtBillCode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Mã hóa đơn"
+                    android:hint="@string/BillID"
                     android:imeOptions="actionNext"
-                    android:inputType="number" />
+                    android:inputType="text"
+                    tools:ignore="Autofill" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -57,19 +55,20 @@
                         android:id="@+id/edtBillDate"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="DD-MM-YYYY"
+                        android:hint="Chọn ngày"
                         android:imeOptions="actionDone"
-                        android:inputType="text" />
+                        tools:ignore="Autofill,HardcodedText,TextFields" />
                 </android.support.design.widget.TextInputLayout>
 
                 <Button
-                    android:onClick="selectDates"
+                    android:id="@+id/btnPickDate_Dialog_Add_Bill"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:text="Chọn"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -79,26 +78,25 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btnAddBill_Dialog_Add_Bill"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:onClick="addBill"
-                    android:text="Thêm"
-                    android:textAllCaps="false" />
+                    android:text="@string/adđ"
+                    android:textAllCaps="false"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
+                    android:id="@+id/btnCancelBill_Dialog_Add_Bill"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:onClick="huyaddBill"
-                    android:text="Hủy"
-                    android:textAllCaps="false" />
+                    android:text="@string/cancel"
+                    android:textAllCaps="false"
+                    tools:ignore="ButtonStyle" />
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>

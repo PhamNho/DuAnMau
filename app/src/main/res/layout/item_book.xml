@@ -1,62 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/imgAvatarBook"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_book" />
-
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvBookName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="Tên sách"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvSoLuongBook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Số lượng " />
-        <TextView
-            android:id="@+id/tvBookPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="20000" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.8"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        tools:ignore="UselessParent">
 
         <ImageView
-            android:id="@+id/imgDeleteBook"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_delete" />
+            android:layout_marginEnd="10dp"
+            android:id="@+id/imgAvatar_Sach"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_book"
+            tools:ignore="ContentDescription" />
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="8dp">
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/tvBook_Name_Item_Book"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content"
+                    android:text="ID: "
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:textSize="12sp"
+                    android:id="@+id/tvBook_ID_Item_Book"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginStart="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content"
+                    android:text="SL: "
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:textSize="12sp"
+                    android:id="@+id/tvQuality_Item_Book"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgEdit_Item_Book"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_edit"
+            android:layout_weight="0.25"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/imgDelete_Item_Book"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_delete"
+            android:layout_weight="0.25"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 </LinearLayout>

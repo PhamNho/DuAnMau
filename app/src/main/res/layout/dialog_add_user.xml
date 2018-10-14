@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.AddUserActivity">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/customtoolbarAddUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:titleTextColor="#ffffff" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
     <LinearLayout
         android:padding="16dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
     <ImageView
         android:layout_width="300dp"
         android:layout_height="120dp"
         android:layout_gravity="center"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/logo_nhasachphuongnam" />
+        android:src="@drawable/logo_nhasachphuongnam"
+        tools:ignore="ContentDescription" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:counterMaxLength="50"
+        app:counterEnabled="true">
 
         <EditText
             android:id="@+id/edtUserName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Tên đăng nhập"
+            android:hint="@string/UserName"
             android:imeOptions="actionNext"
-            android:inputType="text"/>
+            android:inputType="text"
+            tools:ignore="Autofill" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:counterMaxLength="50"
+        app:counterEnabled="true">
 
         <EditText
             android:id="@+id/edtPasswordInAddUser"
@@ -48,12 +47,15 @@
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Mật khẩu" />
+            android:hint="@string/Password"
+            tools:ignore="Autofill" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:counterMaxLength="50"
+        app:counterEnabled="true">
 
         <EditText
             android:id="@+id/edtChangePasswordInAddUser"
@@ -61,7 +63,8 @@
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Nhập lại mật khẩu" />
+            android:hint="Nhập lại mật khẩu"
+            tools:ignore="Autofill,HardcodedText" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -74,13 +77,15 @@
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Số điện thoại" />
+            android:hint="@string/NumberPhone"
+            tools:ignore="Autofill,TextFields" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp">
+        app:counterMaxLength="50"
+        app:counterEnabled="true">
 
         <EditText
             android:id="@+id/edtName"
@@ -88,7 +93,8 @@
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Họ và tên" />
+            android:hint="@string/FullName"
+            tools:ignore="Autofill" />
     </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
@@ -97,22 +103,24 @@
         android:orientation="horizontal">
 
         <Button
-            android:onClick="addUser"
+            android:id="@+id/btnAddUser_Dialog_Add_User"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="Thêm"
-            android:textAllCaps="false" />
+            android:text="@string/adđ"
+            android:textAllCaps="false"
+            tools:ignore="ButtonStyle" />
 
         <Button
+            android:id="@+id/btnCancel_Dialog_Add_User"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:onClick="huyaddUser"
-            android:text="Hủy"
-            android:textAllCaps="false" />
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
     </LinearLayout>
 </LinearLayout>

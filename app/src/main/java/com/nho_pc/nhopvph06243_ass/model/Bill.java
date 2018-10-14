@@ -1,38 +1,32 @@
 package com.nho_pc.nhopvph06243_ass.model;
 
-import java.util.Date;
-
 public class Bill {
-    private String maHoaDon;
-    private Date ngayMua;
 
-    public Bill(String edtB_ID, String edtB_Date) {
-
+    private String Bill_ID;
+    private long Date;
+    public Bill(String bill_ID, long date) {
+        Bill_ID = bill_ID;
+        Date = date;
     }
-
     public Bill() {
-
     }
 
-    public String getMaHoaDon() {
-        return maHoaDon;
+    public String getBill_ID() {
+        return Bill_ID;
     }
 
-    public void setMaHoaDon(String maHoaDon) {
-        this.maHoaDon = maHoaDon;
+    public void setBill_ID(String bill_ID) {
+        Bill_ID = bill_ID;
     }
 
-    public Date getNgayMua() {
-        return ngayMua;
+    public long getDate() {
+        return Date;
     }
 
-    public void setNgayMua(Date ngayMua) {
-        this.ngayMua = ngayMua;
+    public void setDate(long date) {
+        Date = date;
     }
 
-    public Bill(String maHoaDon, Date ngayMua) {
 
-        this.maHoaDon = maHoaDon;
-        this.ngayMua = ngayMua;
-    }
+
 }

@@ -1,58 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.TopBookActivity">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/customtoolbarTopBook"
+    tools:ignore="Overdraw">
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"/>
+        android:orientation="vertical">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/customtoolbarTop10Book"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="8dp"
+        android:layout_gravity="end"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Spinner
+            android:id="@+id/spMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5">
-
-                <EditText
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:imeOptions="actionDone"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Tháng" />
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:onClick="shareBook"
-                android:text="Tìm"
-                android:textAllCaps="false" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/lvTopBook"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
+        </Spinner>
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lvListBestBookSelling"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

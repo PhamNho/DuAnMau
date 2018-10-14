@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="Overdraw">
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/logo_nhasachphuongnam"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_marginEnd="10dp"
+            android:id="@+id/edtDate_Dialog_Edit_Bill"
+            android:paddingStart="5dp"
+            android:gravity="center_vertical"
+            android:textSize="12sp"
+            android:text="@string/pickdate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            tools:ignore="Autofill,LabelFor,RtlSymmetry,TextFields" />
+        <Button
+            android:textAllCaps="false"
+            android:id="@+id/btnPickDate_Dialog_Edit_Bill"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pick" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_marginBottom="3dp"
+            android:id="@+id/btnEdit_Dialog_Edit_Bill"
+            android:textAllCaps="false"
+            android:text="@string/edit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/btnCancel_Dialog_Edit_Bill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+</LinearLayout>

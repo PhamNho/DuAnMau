@@ -1,96 +1,94 @@
 package com.nho_pc.nhopvph06243_ass.ui;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nho_pc.nhopvph06243_ass.R;
 import com.nho_pc.nhopvph06243_ass.dao.UserDAO;
 import com.nho_pc.nhopvph06243_ass.model.Users;
 
+import java.util.Objects;
+
 public class ChangePasswordActivity extends AppCompatActivity {
     private Toolbar customtoolbarChangePassword;
-    private EditText edtPass;
-    private EditText edtRePass;
-    SharedPreferences preferences;
-    String strUserName,strPassword;
-    private String USERNAME_KEY = "user";
-    private String PASSWORD_KEY = "password";
+    private TextView edtPassOld, edtPassNew, edtPassNew2;
     private UserDAO userDAO;
+    private String strUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
-        setTitle("Đổi mật khẩu");
-        initViews();
-        preferences=getSharedPreferences("USER_FILE",MODE_PRIVATE);
-        userDAO=new UserDAO(this);
-        strUserName=preferences.getString(USERNAME_KEY,"");
-        strPassword=preferences.getString(PASSWORD_KEY,"");
+        setTitle(getString(R.string.title_changePassword));
 
-        customtoolbarChangePassword = (Toolbar) findViewById(R.id.customtoolbarChangePassword);
-
+        customtoolbarChangePassword = findViewById(R.id.customtoolbarChangePassword);
         setSupportActionBar(customtoolbarChangePassword);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        customtoolbarChangePassword.setNavigationIcon(R.drawable.ic_back);
         customtoolbarChangePassword.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ChangePasswordActivity.this, UserActivity.class));
+            public void onClick(View v) {
                 finish();
             }
         });
-    }
 
-    private void initViews() {
-        edtPass = findViewById(R.id.edtNewPassword);
-        edtRePass = findViewById(R.id.edtNewPassword2);
-    }
-
-    public int validateForm(){
-        int check = 1;
-        if (edtPass.getText().length()==0 || edtRePass.getText().length() == 0) {
-            if (edtPass.getText().length()==0 )edtPass.setError(getText(R.string.notify_empty_pass));
-            if (edtRePass.getText().length()==0 )edtRePass.setError(getText(R.string.notify_empty_pass));
-            check = -1;
-        }else {
-            String pass = edtPass.getText().toString();
-            String rePass = edtRePass.getText().toString();
-            if (!pass.equals(rePass)) {
-                Toast.makeText(getApplicationContext(), "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
-                check = -1;
-            }
-        }
-        return check;
-    }
-    public void changePassword(View view) {
-        SharedPreferences pref = getSharedPreferences("USER_FILE",MODE_PRIVATE);
-        String strUserName = pref.getString("USERNAME","");
-        userDAO = new UserDAO(ChangePasswordActivity.this);
-        Users user = new Users(strUserName, edtPass.getText().toString(), "", "");
-        try {
-            if (validateForm()>0){
-                if (userDAO.changePasswordUsers(user) > 0) {
-                    Toast.makeText(getApplicationContext(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Lưu thất bại", Toast.LENGTH_SHORT).show();
-                }
-            }
-            finish();
-        } catch (Exception ex) {
-            Log.e("Error", ex.toString());
-        }
+        userDAO = new UserDAO(this);
+        edtPassOld = findViewById(R.id.edtPassWord_Old_Dialog_Change_Password);
+        edtPassNew = findViewById(R.id.edtPassWord_New_Dialog_Change_Password);
+        edtPassNew2 = findViewById(R.id.edtPassWord_New2_Dialog_Change_Password);
+        SharedPreferences preferences = getSharedPreferences("USER_FILE2", MODE_PRIVATE);
+        strUserName = preferences.getString("UserName", "").toUpperCase();
     }
 
     public void huyChangePassword(View view) {
         finish();
+    }
+
+    public void showChangePassword(View view) {
+        String passOld = edtPassOld.getText().toString().trim();
+        String passNew = edtPassNew.getText().toString().trim();
+        String passNew2 = edtPassNew2.getText().toString().trim();
+
+        if (passNew.isEmpty() || passNew2.isEmpty() || passOld.isEmpty()) {
+            if (passOld.isEmpty())
+                edtPassOld.setError(getString(R.string.notify_empty_passold));
+            if (passNew.isEmpty())
+                edtPassNew.setError(getString(R.string.notify_empty_passnew));
+            if (passNew.isEmpty())
+                edtPassNew2.setError(getString(R.string.notify_empty_passnew2));
+        } else if (passNew.length() < 6 || passNew2.length() < 6 || passOld.length() < 6 || passNew.length() > 50 || passNew2.length() > 50 || passOld.length() > 50) {
+            if (passNew.length() < 6)
+                edtPassNew.setError(getString(R.string.notify_length_pass));
+            if (passNew2.length() < 6)
+                edtPassNew2.setError(getString(R.string.notify_length_pass));
+            if (passOld.length() < 6)
+                edtPassOld.setError(getString(R.string.notify_length_pass));
+            if (passOld.length() > 50)
+                edtPassOld.setError(getString(R.string.notify_length_pass2));
+            if (passNew.length() > 50)
+                edtPassNew.setError(getString(R.string.notify_length_pass2));
+            if (passNew2.length() > 50)
+                edtPassNew2.setError(getString(R.string.notify_length_pass2));
+        } else if (!passNew.equals(passNew2)) {
+            edtPassNew2.setError(getString(R.string.notify_same_pass));
+        } else {
+            Users user = userDAO.getUser(strUserName);
+            if (user.getPassword().equals(passOld)) {
+                int result = userDAO.updatePassWord(strUserName, passNew2);
+                if (result == 1) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.change_pass_success) + " " + strUserName, Toast.LENGTH_SHORT).show();
+                } else if (result == -1) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.change_pass_failed), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                edtPassOld.setError(getString(R.string.wrong_pass));
+            }
+        }
     }
 }

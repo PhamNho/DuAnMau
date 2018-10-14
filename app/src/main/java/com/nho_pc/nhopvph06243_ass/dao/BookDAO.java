@@ -12,193 +12,202 @@ import com.nho_pc.nhopvph06243_ass.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BookDAO implements Constant {
-    private SQLiteDatabase db;
-    private DatabaseHelper databaseHelper;
-    public static final String TABLE_NAME = "book";
+    private final DatabaseHelper databaseHelper;
 
     public BookDAO(Context context) {
-        databaseHelper = new DatabaseHelper(context);
-        db = databaseHelper.getWritableDatabase();
+        this.databaseHelper = new DatabaseHelper(context);
     }
 
-    //insert
-    public int inserBook(Book book) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_BOOK_ID, book.getMaSach());
-        values.put(COLUMN_TYPE_ID, book.getMaTheLoai());
-        values.put(COLUMN_BOOK_NAME, book.getTenSach());
-        values.put(COLUMN_TAC_GIA, book.getTacGia());
-        values.put(COLUMN_NXB, book.getNXB());
-        values.put(COLUMN_GIA_BIA, book.getGiaBia());
-        values.put(COLUMN_SO_LUONG, book.getSoLuong());
-        if (checkPrimaryKey(book.getMaSach())) {
-            int result = db.update(TABLE_NAME, values, COLUMN_BOOK_ID + "=?", new String[]{book.getMaSach()});
-            if (result == 0) {
-                return -1;
-            }
-        } else {
-            try {
-                if (db.insert(TABLE_NAME, null, values) == -1) {
-                    return -1;
-                }
-            } catch (Exception ex) {
-            }
+    public long insertBook(Book book) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TB_COLUMN_BOOK_ID, book.getBookID());
+        contentValues.put(TB_COLUMN_BOOK_NAME, book.getBookName());
+        contentValues.put(TB_COLUMN_TYPE_BOOK_ID, book.getType_Book_ID());
+        contentValues.put(TB_COLUMN_AUTHOR, book.getAuthor());
+        contentValues.put(TB_COLUMN_NXB, book.getNXB());
+        contentValues.put(TB_COLUMN_PRICE, book.getPrice());
+        contentValues.put(TB_COLUMN_QUANTITY, book.getQuantity());
+        long result = db.insert(BOOK_TABLE, null, contentValues);
+        if (Constant.isDEBUG) Log.e("insertBook", "insertBook ID : " + book.getBookID());
+        db.close();
+        return result;
+    }
+
+    public long deleteBook(String bookID) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        long result = db.delete(BOOK_TABLE, TB_COLUMN_BOOK_ID + " = ?",
+                new String[]{String.valueOf(bookID)});
+        db.close();
+        return result;
+
+    }
+
+    public long updateBook(Book book) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TB_COLUMN_BOOK_NAME, book.getBookName());
+        contentValues.put(TB_COLUMN_AUTHOR, book.getAuthor());
+        contentValues.put(TB_COLUMN_TYPE_BOOK_ID, book.getType_Book_ID());
+        contentValues.put(TB_COLUMN_NXB, book.getNXB());
+        contentValues.put(TB_COLUMN_PRICE, book.getPrice());
+        contentValues.put(TB_COLUMN_QUANTITY, book.getQuantity());
+        return db.update(BOOK_TABLE, contentValues, TB_COLUMN_BOOK_ID + " = ?",
+                new String[]{String.valueOf(book.getBookID())});
+    }
+
+    public List<Book> getAllBooks() {
+
+        List<Book> books = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + BOOK_TABLE;
+
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String bookID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BOOK_ID));
+                String bookName = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BOOK_NAME));
+                String author = cursor.getString(cursor.getColumnIndex(TB_COLUMN_AUTHOR));
+                String nxb = cursor.getString(cursor.getColumnIndex(TB_COLUMN_NXB));
+                String price = cursor.getString(cursor.getColumnIndex(TB_COLUMN_PRICE));
+                String quantity = cursor.getString(cursor.getColumnIndex(TB_COLUMN_QUANTITY));
+                String type_Book_ID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_TYPE_BOOK_ID));
+                Book book = new Book();
+                book.setBookID(bookID);
+                book.setBookName(bookName);
+                book.setAuthor(author);
+                book.setNXB(nxb);
+                book.setPrice(price);
+                book.setQuantity(quantity);
+                book.setType_Book_ID(type_Book_ID);
+                books.add(book);
+            } while (cursor.moveToNext());
         }
-        return 1;
+        cursor.close();
+        db.close();
+
+        return books;
+
     }
 
-    // lấy ra tất cả sách
-    public List<Book> getAllBook() {
-        List<Book> bookList = new ArrayList<>();
-        Cursor c = db.query(TABLE_NAME, null, null, null, null, null, null);
-        c.moveToFirst();
-        while (c.isAfterLast() == false) {
-            Book book = new Book();
-            book.setMaSach(c.getString(0));
-            book.setMaTheLoai(c.getString(1));
-            book.setTenSach(c.getString(2));
-            book.setTacGia(c.getString(3));
-            book.setNXB(c.getString(4));
-            book.setGiaBia(c.getDouble(5));
-            book.setSoLuong(c.getInt(6));
-            bookList.add(book);
-            c.moveToNext();
+    public List<Book> getAllBooksLike(String ID) {
+
+        List<Book> books = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + BOOK_TABLE + " WHERE " + TB_COLUMN_BOOK_ID + " like '%" + ID + "%'";
+
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String bookID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BOOK_ID));
+                String bookName = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BOOK_NAME));
+                String author = cursor.getString(cursor.getColumnIndex(TB_COLUMN_AUTHOR));
+                String nxb = cursor.getString(cursor.getColumnIndex(TB_COLUMN_NXB));
+                String price = cursor.getString(cursor.getColumnIndex(TB_COLUMN_PRICE));
+                String quantity = cursor.getString(cursor.getColumnIndex(TB_COLUMN_QUANTITY));
+                String type_Book_ID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_TYPE_BOOK_ID));
+                Book book = new Book();
+                book.setBookID(bookID);
+                book.setBookName(bookName);
+                book.setAuthor(author);
+                book.setNXB(nxb);
+                book.setPrice(price);
+                book.setQuantity(quantity);
+                book.setType_Book_ID(type_Book_ID);
+                books.add(book);
+            } while (cursor.moveToNext());
         }
-        c.close();
-        return bookList;
+        cursor.close();
+        db.close();
+
+        return books;
+
     }
 
-    //update
-    public int updateBook(Book book) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_BOOK_ID, book.getMaSach());
-        values.put(COLUMN_TYPE_ID, book.getMaTheLoai());
-        values.put(COLUMN_BOOK_NAME, book.getTenSach());
-        values.put(COLUMN_TAC_GIA, book.getTacGia());
-        values.put(COLUMN_NXB, book.getNXB());
-        values.put(COLUMN_GIA_BIA, book.getGiaBia());
-        values.put(COLUMN_SO_LUONG, book.getSoLuong());
-        int result = db.update(TABLE_NAME, values, COLUMN_BOOK_ID + "=?", new String[]{book.getMaSach()});
-        if (result == 0) {
-            return -1;
+    public List<Book> getAllBooksByIDTypeBook(String ID) {
+
+        List<Book> books = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + BOOK_TABLE + " WHERE " + TB_COLUMN_TYPE_BOOK_ID + " = ?";
+
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{ID});
+        if (cursor.moveToFirst()) {
+            do {
+                String bookID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BOOK_ID));
+                String bookName = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BOOK_NAME));
+                String author = cursor.getString(cursor.getColumnIndex(TB_COLUMN_AUTHOR));
+                String nxb = cursor.getString(cursor.getColumnIndex(TB_COLUMN_NXB));
+                String price = cursor.getString(cursor.getColumnIndex(TB_COLUMN_PRICE));
+                String quantity = cursor.getString(cursor.getColumnIndex(TB_COLUMN_QUANTITY));
+                String type_Book_ID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_TYPE_BOOK_ID));
+                Book book = new Book();
+                book.setBookID(bookID);
+                book.setBookName(bookName);
+                book.setAuthor(author);
+                book.setNXB(nxb);
+                book.setPrice(price);
+                book.setQuantity(quantity);
+                book.setType_Book_ID(type_Book_ID);
+                books.add(book);
+            } while (cursor.moveToNext());
         }
-        return 1;
+        cursor.close();
+        db.close();
+
+        return books;
+
     }
 
-    //delete
-    public int deleteBookByID(String maSach) {
-        int result = db.delete(TABLE_NAME, COLUMN_BOOK_ID + "=?", new String[]{maSach});
-        if (result == 0)
-            return -1;
-        return 1;
-    }
+    public Book getBookByID(String bookID) {
 
-    //check
-    public boolean checkPrimaryKey(String strPrimaryKey) {
-        //SELECT
-        String[] columns = {COLUMN_BOOK_ID};
-        //WHERE clause
-        String selection = COLUMN_BOOK_ID + "=?";
-        //WHERE clause arguments
-        String[] selectionArgs = {strPrimaryKey};
-        Cursor c = null;
-        try {
-            c = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null,
-                    null);
-            c.moveToFirst();
-            int i = c.getCount();
-            c.close();
-            if (i <= 0) {
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    //check
-    public Book checkBook(String strPrimaryKey) {
-        Book book = new Book();
-        //SELECT
-        String[] columns = {COLUMN_BOOK_ID};
-        //WHERE clause
-        String selection = COLUMN_BOOK_ID + "=?";
-        //WHERE clause arguments
-        String[] selectionArgs = {strPrimaryKey};
-        Cursor c = null;
-        try {
-            c = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null,
-                    null);
-            c.moveToFirst();
-            while (c.isAfterLast() == false) {
-                book = new Book();
-                book.setMaSach(c.getString(0));
-                book.setMaTheLoai(c.getString(1));
-                book.setTenSach(c.getString(2));
-                book.setTacGia(c.getString(3));
-                book.setNXB(c.getString(4));
-                book.setGiaBia(c.getDouble(5));
-                book.setSoLuong(c.getInt(6));
-                break;
-            }
-            c.close();
-            return book;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // lấy sách theo ID
-    public Book getBookByID(String bookcode) {
         Book book = null;
-        //WHERE clause
-        String selection = COLUMN_BOOK_ID+"=?";
-        //WHERE clause arguments
-        String[] selectionArgs = {bookcode};
-        Cursor c = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        c.moveToFirst();
-        while (c.isAfterLast() == false) {
-            book = new Book();
-            book.setMaSach(c.getString(0));
-            book.setMaTheLoai(c.getString(1));
-            book.setTenSach(c.getString(2));
-            book.setTacGia(c.getString(3));
-            book.setNXB(c.getString(4));
-            book.setGiaBia(c.getDouble(5));
-            book.setSoLuong(c.getInt(6));
-            break;
+
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(BOOK_TABLE, new String[]{TB_COLUMN_BOOK_ID, TB_COLUMN_TYPE_BOOK_ID, TB_COLUMN_BOOK_NAME, TB_COLUMN_AUTHOR, TB_COLUMN_NXB, TB_COLUMN_PRICE, TB_COLUMN_QUANTITY},
+                TB_COLUMN_BOOK_ID + "=?", new String[]{bookID},
+                null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+
+            String ID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BOOK_ID));
+            String bookName = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BOOK_NAME));
+            String author = cursor.getString(cursor.getColumnIndex(TB_COLUMN_AUTHOR));
+            String nxb = cursor.getString(cursor.getColumnIndex(TB_COLUMN_NXB));
+            String price = cursor.getString(cursor.getColumnIndex(TB_COLUMN_PRICE));
+            String quantity = cursor.getString(cursor.getColumnIndex(TB_COLUMN_QUANTITY));
+            String type_Book_ID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_TYPE_BOOK_ID));
+
+            book = new Book(ID, bookName, type_Book_ID, author, nxb, price, quantity);
         }
-        c.close();
+        Objects.requireNonNull(cursor).close();
         return book;
+
     }
 
-    // lấy 10 sách bán chạy nhất
     public List<Book> getSachTop10(String month) {
-        List<Book> bookList = new ArrayList<>();
-        if (Integer.parseInt(month) < 10) {
-            month = "0" + month;
-        }
-        String sSQL = "SELECT maSach, SUM(soLuong) as soluong FROM HoaDonChiTiet INNER JOIN HoaDon " + "ON HoaDon.maHoaDon = HoaDonChiTiet.maHoaDon WHERE strftime('%m',HoaDon.ngayMua) = '" + month + "' " + "GROUP BY maSach ORDER BY soluong DESC LIMIT 10";
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        List<Book> listBook = new ArrayList<>();
+        String sSQL = "SELECT BookID, SUM(Quantity) as quantity FROM BillDetail INNER JOIN Bill " +
+                "ON Bill.BillID = BillDetail.BillID WHERE strftime('%Y-%m', " + TB_COLUMN_BILL_DATE + "/ 1000, 'unixepoch')  = '" + month + "'"+
+                "GROUP BY BookID ORDER BY quantity DESC LIMIT 10";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
-        while (c.isAfterLast() == false) {
-            Book book = new Book();
-            book.setMaSach(c.getString(0));
-            book.setSoLuong(c.getInt(1));
-            book.setGiaBia(0.0);
-            book.setMaTheLoai("");
-            book.setTenSach("");
-            book.setTacGia("");
-            book.setNXB("");
-            bookList.add(book);
+        while (!c.isAfterLast()) {
+            Book s = new Book();
+            s.setBookID(c.getString(c.getColumnIndex(TB_COLUMN_BOOK_ID)));
+            s.setQuantity(c.getString(c.getColumnIndex("quantity")));
+            s.setPrice("");
+            s.setBookName("");
+            s.setNXB("");
+            s.setNXB("");
+            listBook.add(s);
             c.moveToNext();
         }
         c.close();
-        return bookList;
+        return listBook;
     }
+
 }

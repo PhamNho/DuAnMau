@@ -1,58 +1,52 @@
 package com.nho_pc.nhopvph06243_ass.model;
 
 public class Book {
-    private String maSach;
-    private String maTheLoai;
-    private String tenSach;
-    private String tacGia;
-    private String NXB;
-    private Double giaBia;
-    private int soLuong;
+    private String BookID,BookName,Type_Book_ID,Author,NXB,Price,Quantity;
 
-    public Book(String maSach, String maTheLoai, String tenSach, String tacGia, String NXB, Double giaBia, int soLuong) {
-        this.maSach = maSach;
-        this.maTheLoai = maTheLoai;
-        this.tenSach = tenSach;
-        this.tacGia = tacGia;
+    public Book(String bookID, String bookName, String type_Book_ID, String author, String NXB, String price, String quantity) {
+        BookID = bookID;
+        BookName = bookName;
+        Type_Book_ID = type_Book_ID;
+        Author = author;
         this.NXB = NXB;
-        this.giaBia = giaBia;
-        this.soLuong = soLuong;
+        Price = price;
+        Quantity = quantity;
     }
 
     public Book() {
 
     }
 
-    public String getMaSach() {
-        return maSach;
+    public String getBookID() {
+        return BookID;
     }
 
-    public void setMaSach(String maSach) {
-        this.maSach = maSach;
+    public void setBookID(String bookID) {
+        BookID = bookID;
     }
 
-    public String getMaTheLoai() {
-        return maTheLoai;
+    public String getBookName() {
+        return BookName;
     }
 
-    public void setMaTheLoai(String maTheLoai) {
-        this.maTheLoai = maTheLoai;
+    public void setBookName(String bookName) {
+        BookName = bookName;
     }
 
-    public String getTenSach() {
-        return tenSach;
+    public String getType_Book_ID() {
+        return Type_Book_ID;
     }
 
-    public void setTenSach(String tenSach) {
-        this.tenSach = tenSach;
+    public void setType_Book_ID(String type_Book_ID) {
+        Type_Book_ID = type_Book_ID;
     }
 
-    public String getTacGia() {
-        return tacGia;
+    public String getAuthor() {
+        return Author;
     }
 
-    public void setTacGia(String tacGia) {
-        this.tacGia = tacGia;
+    public void setAuthor(String author) {
+        Author = author;
     }
 
     public String getNXB() {
@@ -63,19 +57,19 @@ public class Book {
         this.NXB = NXB;
     }
 
-    public Double getGiaBia() {
-        return giaBia;
+    public String getPrice() {
+        return Price;
     }
 
-    public void setGiaBia(Double giaBia) {
-        this.giaBia = giaBia;
+    public void setPrice(String price) {
+        Price = price;
     }
 
-    public int getSoLuong() {
-        return soLuong;
+    public String getQuantity() {
+        return Quantity;
     }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+    public void setQuantity(String quantity) {
+        Quantity = quantity;
     }
 }

@@ -48,13 +48,4 @@ public class Users {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    @Override
-    public String toString() {
-        return "NguoiDung{" +
-                "userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + name + '\'' +
-                ", hoTen='" + phoneNumber + '\'' +
-                '}';
-    }
 }

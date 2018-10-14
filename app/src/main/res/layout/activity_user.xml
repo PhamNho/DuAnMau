@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,19 +13,22 @@
         android:background="@color/colorPrimary"
         app:titleTextColor="#ffffff" />
 
-    <ListView
-        android:id="@+id/lvUser"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="55dp">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
     <android.support.design.widget.FloatingActionButton
-        android:onClick="addUsers"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:padding="0dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        app:fabSize="mini"
+        android:id="@+id/fbtn_User"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorAccent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
         android:src="@mipmap/ic_add"/>
 
-</FrameLayout>
+</RelativeLayout>

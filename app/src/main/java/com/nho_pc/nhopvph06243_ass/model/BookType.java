@@ -1,16 +1,12 @@
 package com.nho_pc.nhopvph06243_ass.model;
 
 public class BookType {
-    private String typeID;
-    private String typeName;
-    private String Description;
-    private String position;
+    private String id,name,description,position;
 
-    public BookType(String typeID, String typeName, String description, String position) {
-
-        this.typeID = typeID;
-        this.typeName = typeName;
-        this.Description = description;
+    public BookType(String id, String name, String description, String position) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
         this.position = position;
     }
 
@@ -18,28 +14,28 @@ public class BookType {
 
     }
 
-    public String getTypeID() {
-        return typeID;
+    public String getId() {
+        return id;
     }
 
-    public void setTypeID(String typeCode) {
-        this.typeID = typeCode;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public String getName() {
+        return name;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getPosition() {
@@ -48,5 +44,11 @@ public class BookType {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return getId()+"("+getName()+")";
+
     }
 }

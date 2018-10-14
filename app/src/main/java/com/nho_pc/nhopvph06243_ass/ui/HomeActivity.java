@@ -9,32 +9,32 @@ import android.widget.ImageView;
 import com.nho_pc.nhopvph06243_ass.R;
 
 public class HomeActivity extends AppCompatActivity {
-    private ImageView imgUser;
-    private ImageView imgBookType;
-    private ImageView imgBook;
-    private ImageView imgBill;
-    private ImageView imgTopBook;
-    private ImageView imgStatistics;
-    private ImageView imgIntroduce;
+    ImageView imgUser;
+    ImageView imgBookType;
+    ImageView imgBook;
+    ImageView imgBill;
+    ImageView imgTopBook;
+    ImageView imgStatistics;
+    ImageView imgIntroduce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setTitle("Trang chủ");
+        setTitle(getString(R.string.title_home));
         initViews();
 
 
     }
 
     private void initViews() {
-        imgUser = (ImageView) findViewById(R.id.imgUser);
-        imgBookType = (ImageView) findViewById(R.id.imgBookType);
-        imgBook = (ImageView) findViewById(R.id.imgBook);
-        imgBill = (ImageView) findViewById(R.id.imgBill);
-        imgTopBook = (ImageView) findViewById(R.id.imgTopBook);
-        imgStatistics = (ImageView) findViewById(R.id.imgStatistics);
-        imgIntroduce = (ImageView) findViewById(R.id.imgIntroduce);
+        imgUser = findViewById(R.id.imgUser);
+        imgBookType = findViewById(R.id.imgBookType);
+        imgBook = findViewById(R.id.imgBook);
+        imgBill = findViewById(R.id.imgBill);
+        imgTopBook = findViewById(R.id.imgTopBook);
+        imgStatistics = findViewById(R.id.imgStatistics);
+        imgIntroduce = findViewById(R.id.imgIntroduce);
     }
 
     public void showUserActivity(View view) {
@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void showTopBookActivity(View view) {
-        startActivity(new Intent(HomeActivity.this, TopBookActivity.class));
+        startActivity(new Intent(HomeActivity.this, Top10BookActivity.class));
     }
 
     public void showStatisticsActivity(View view) {

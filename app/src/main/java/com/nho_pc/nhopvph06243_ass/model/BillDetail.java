@@ -1,51 +1,38 @@
 package com.nho_pc.nhopvph06243_ass.model;
 
 public class BillDetail {
-    private int billdetailID;
-    private Bill hoaDon;
-    private Book sach;
-    private int soLuongMua;
+    private Integer billDetailID;
+    private String billID,bookID,quantity;
 
-    public BillDetail(int billdetailID, Bill hoaDon, Book sach, int soLuongMua) {
-        this.billdetailID = billdetailID;
-        this.hoaDon = hoaDon;
-        this.sach = sach;
-        this.soLuongMua = soLuongMua;
+    public Integer getBillDetailID() {
+        return billDetailID;
     }
 
-    public BillDetail() {
-
+    public void setBillDetailID(Integer billDetailID) {
+        this.billDetailID = billDetailID;
     }
 
-    public int getbilldetailID() {
-        return billdetailID;
+    public void setBillID(String billID) {
+        this.billID = billID;
     }
 
-    public void setMaHDCT(int billdetailID) {
-        this.billdetailID = billdetailID;
+    public String getBillID() {
+        return billID;
     }
 
-    public Bill getHoaDon() {
-        return hoaDon;
+    public String getBookID() {
+        return bookID;
     }
 
-    public void setHoaDon(Bill hoaDon) {
-        this.hoaDon = hoaDon;
+    public void setBookID(String bookID) {
+        this.bookID = bookID;
     }
 
-    public Book getSach() {
-        return sach;
+    public String getQuantity() {
+        return quantity;
     }
 
-    public void setSach(Book sach) {
-        this.sach = sach;
-    }
-
-    public int getSoLuongMua() {
-        return soLuongMua;
-    }
-
-    public void setSoLuongMua(int soLuongMua) {
-        this.soLuongMua = soLuongMua;
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }

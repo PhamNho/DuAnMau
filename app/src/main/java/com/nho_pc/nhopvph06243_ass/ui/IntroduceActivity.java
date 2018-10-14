@@ -8,17 +8,18 @@ import android.view.View;
 
 import com.nho_pc.nhopvph06243_ass.R;
 
+import java.util.Objects;
+
 public class IntroduceActivity extends AppCompatActivity {
     private Toolbar customtoolbarIntroduce;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introduce);
-        customtoolbarIntroduce = (Toolbar) findViewById(R.id.customtoolbarIntroduce);
+        customtoolbarIntroduce = findViewById(R.id.customtoolbarIntroduce);
 
         setSupportActionBar(customtoolbarIntroduce);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         //
         customtoolbarIntroduce.setNavigationOnClickListener(new View.OnClickListener() {

@@ -14,67 +14,101 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BillDAO implements Constant {
-    private SQLiteDatabase db;
-    private DatabaseHelper dbHelper;
-    public static final String TABLE_NAME = "Bill";
-    public static final String TAG = "BillDAO";
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    private final DatabaseHelper  databaseHelper;
 
     public BillDAO(Context context) {
-        dbHelper = new DatabaseHelper(context);
-        db = dbHelper.getWritableDatabase();
+        databaseHelper = new DatabaseHelper(context);
     }
 
-    //insert
-    public int inserBill(Bill bill) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_BILL_ID, bill.getMaHoaDon());
-        values.put(COLUMN_DATE_BILL, sdf.format(bill.getNgayMua()));
-        try {
-            if (db.insert(TABLE_NAME, null, values) == -1) {
-                return -1;
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, ex.toString());
+    public long insertBill(Bill bill) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TB_COLUMN_BILL_ID, bill.getBill_ID());
+        contentValues.put(TB_COLUMN_BILL_DATE, bill.getDate());
+        long result = db.insert(BILL_TABLE, null, contentValues);
+        if (Constant.isDEBUG) Log.e("insertBill", "insertBill ID : " +bill.getBill_ID());
+        db.close();
+        return result;
+    }
+    public long deleteBill(String billID) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        long result = db.delete(BILL_TABLE, TB_COLUMN_BILL_ID + " = ?",
+                new String[]{String.valueOf(billID)});
+        db.close();
+        return result;
+
+    }
+    public long updateBill(Bill bill) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TB_COLUMN_BILL_ID, bill.getBill_ID());
+        contentValues.put(TB_COLUMN_BILL_DATE, bill.getDate());
+        return db.update(BILL_TABLE, contentValues, TB_COLUMN_BILL_ID + " = ?",
+                new String[]{String.valueOf(bill.getBill_ID())});
+    }
+    public List<Bill> getAllBills() {
+
+        List<Bill> bills = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + BILL_TABLE;
+
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String billID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BILL_ID));
+                long billDate = cursor.getLong(cursor.getColumnIndex(TB_COLUMN_BILL_DATE));
+                Bill bill = new Bill();
+                bill.setBill_ID(billID);
+                bill.setDate(billDate);
+                bills.add(bill);
+            } while (cursor.moveToNext());
         }
-        return 1;
-    }
+        cursor.close();
+        db.close();
 
-    //getAll
-    public List<Bill> getAllBill() throws ParseException {
-        List<Bill> billList = new ArrayList<>();
-        Cursor c = db.query(TABLE_NAME, null, null, null, null, null, null);
-        c.moveToFirst();
-        while (c.isAfterLast() == false) {
-            Bill bill = new Bill();
-            bill.setMaHoaDon(c.getString(0));
-            bill.setNgayMua(sdf.parse(c.getString(1)));
-            billList.add(bill);
-            c.moveToNext();
+        return bills;
+
+    }
+    public List<Bill> getAllBillsLike(String ID) {
+
+        List<Bill> bills = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + BILL_TABLE +" WHERE "+TB_COLUMN_BILL_ID+" like '%"+ID+"%'";
+        Log.e("getAllBillsLike",selectQuery);
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if (cursor.moveToFirst()) {
+            do {
+                String billID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BILL_ID));
+                long billDate = cursor.getLong(cursor.getColumnIndex(TB_COLUMN_BILL_DATE));
+                Bill bill = new Bill();
+                bill.setBill_ID(billID);
+                bill.setDate(billDate);
+                bills.add(bill);
+            } while (cursor.moveToNext());
         }
-        c.close();
-        return billList;
-    }
+        cursor.close();
+        db.close();
 
-    //update
-    public int updateBill(Bill bill) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_BILL_ID, bill.getMaHoaDon());
-        values.put(COLUMN_DATE_BILL, sdf.format(bill.getNgayMua()));
-        int result = db.update(TABLE_NAME, values, COLUMN_BILL_ID + "=?", new String[]{bill.getMaHoaDon()});
-        if (result == 0) {
-            return -1;
+        return bills;
+
+    }
+    public Bill getBillByID(String billID) {
+        Bill bill =null;
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(BILL_TABLE, new String[]{TB_COLUMN_BILL_ID, TB_COLUMN_BILL_DATE},
+                TB_COLUMN_BILL_ID + "=?", new String[]{billID},
+                null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            String ID = cursor.getString(cursor.getColumnIndex(TB_COLUMN_BILL_ID));
+            long date = cursor.getLong(cursor.getColumnIndex(TB_COLUMN_BILL_DATE));
+            bill = new Bill(ID,date);
         }
-        return 1;
+        Objects.requireNonNull(cursor).close();
+        return bill;
     }
 
-    //delete
-    public int deleteBillByID(String billcode) {
-        int result = db.delete(TABLE_NAME, COLUMN_BILL_ID + "=?", new String[]{billcode});
-        if (result == 0)
-            return -1;
-        return 1;
-    }
 }
