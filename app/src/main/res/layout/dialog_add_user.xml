@@ -11,23 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/logo_nhasachphuongnam"
-        tools:ignore="ContentDescription" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:counterMaxLength="50"
-        app:counterEnabled="true">
+        <ImageView
+            android:layout_width="249dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/logo_nhasachphuongnam"
+            tools:ignore="ContentDescription" />
 
-        <EditText
-            android:id="@+id/edtUserName"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:counterMaxLength="50"
+            app:counterEnabled="true">
+
+            <EditText
+                android:id="@+id/edtUserName"
+                android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/UserName"
             android:imeOptions="actionNext"

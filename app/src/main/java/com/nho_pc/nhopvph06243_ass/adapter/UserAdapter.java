@@ -40,8 +40,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final Users user = userList.get(position);
 
-
-
         if(user.getName().length()>20){
             String name = "Tên : "+user.getName().substring(0,20)+"...";
             holder.tvName.setText(name);

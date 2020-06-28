@@ -129,4 +129,6 @@
     <string name="notify_max_bill_id">Mã hóa đơn không quá 7 kí tự</string>
     <string name="notify_empty_BillID">Nhập mã hóa đơn</string>
     <string name="BillID">Mã hóa đơn</string>
+    <string name="title_statistics">Thống kê</string>
+    <string name="title_introduce">Phương Nam</string>
 </resources>

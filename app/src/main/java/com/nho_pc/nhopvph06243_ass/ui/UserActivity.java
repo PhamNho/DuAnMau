@@ -53,7 +53,7 @@ public class UserActivity extends AppCompatActivity implements OnEdit, OnDelete 
         setTitleColor(Color.BLACK);
         initViews();
         SharedPreferences preferences = getSharedPreferences("USER_FILE2", MODE_PRIVATE);
-        strUserName = preferences.getString("UserName", "").toUpperCase();
+        strUserName = Objects.requireNonNull(preferences.getString("UserName", "")).toUpperCase();
         userDAO = new UserDAO(this);
         customtoolbarUser.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

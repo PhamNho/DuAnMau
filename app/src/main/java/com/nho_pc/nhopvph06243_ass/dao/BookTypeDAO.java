@@ -77,35 +77,36 @@ public class BookTypeDAO implements Constant{
         return typeBooks;
 
     }
-    public List<BookType> getAllTypeBooksLike(String ID) {
 
-        List<BookType> typeBooks = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TYPE_BOOK_TABLE+ " WHERE " + TB_COLUMN_TYPE_BOOK_ID + " like '%" + ID + "%'";
-
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) {
-            do {
-                String id = cursor.getString(cursor.getColumnIndex(TB_COLUMN_TYPE_BOOK_ID));
-                String name = cursor.getString(cursor.getColumnIndex(TB_COLUMN_TYPE_NAME));
-                String description = cursor.getString(cursor.getColumnIndex(TB_COLUMN_DESCRIPTION));
-                String position = cursor.getString(cursor.getColumnIndex(TB_COLUMN_POSITION));
-                BookType typeBook = new BookType();
-                typeBook.setId(id);
-                typeBook.setName(name);
-                typeBook.setDescription(description);
-                typeBook.setPosition(position);
-                typeBooks.add(typeBook);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return typeBooks;
-
-    }
+    //    public List<BookType> getAllTypeBooksLike(String ID) {
+//
+//        List<BookType> typeBooks = new ArrayList<>();
+//        String selectQuery = "SELECT  * FROM " + TYPE_BOOK_TABLE+ " WHERE " + TB_COLUMN_TYPE_BOOK_ID + " like '%" + ID + "%'";
+//
+//        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+//        Cursor cursor = db.rawQuery(selectQuery, null);
+//        if (cursor.moveToFirst()) {
+//            do {
+//                String id = cursor.getString(cursor.getColumnIndex(TB_COLUMN_TYPE_BOOK_ID));
+//                String name = cursor.getString(cursor.getColumnIndex(TB_COLUMN_TYPE_NAME));
+//                String description = cursor.getString(cursor.getColumnIndex(TB_COLUMN_DESCRIPTION));
+//                String position = cursor.getString(cursor.getColumnIndex(TB_COLUMN_POSITION));
+//                BookType typeBook = new BookType();
+//                typeBook.setId(id);
+//                typeBook.setName(name);
+//                typeBook.setDescription(description);
+//                typeBook.setPosition(position);
+//                typeBooks.add(typeBook);
+//            } while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        db.close();
+//        return typeBooks;
+//
+//    }
     public BookType getTypeBookByID(String typeID) {
 
-        BookType typeBook=null;
+        BookType typeBook = null;
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 

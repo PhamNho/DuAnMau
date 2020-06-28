@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,25 +54,6 @@ public class BookTypeActivity extends AppCompatActivity implements OnDelete, OnE
         rvListTypeBook.setAdapter(bookTypeAdapter);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         rvListTypeBook.setLayoutManager(manager);
-//        EditText edSearch = findViewById(R.id.edtSearchBookType);
-//        edSearch.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int
-//                    count) {
-//                System.out.println("Text [" + s + "] - Start [" + start + "] - Before [" + before + "] - Count [" + count + "]");
-//                if (count < before) {
-//                    bookTypeAdapter.resetData();
-//                }
-//                bookTypeAdapter.getFilter().filter(s.toString());
-//            }
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count,
-//                                          int after) {
-//            }
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
     }
 
     private void inisViews() {
@@ -101,7 +83,7 @@ public class BookTypeActivity extends AppCompatActivity implements OnDelete, OnE
         });
         rvListTypeBook.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0 && fabAddTypeBook.getVisibility() == View.VISIBLE) {
                     fabAddTypeBook.hide();
@@ -116,6 +98,7 @@ public class BookTypeActivity extends AppCompatActivity implements OnDelete, OnE
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") View dialogView = Objects.requireNonNull(inflater).inflate(R.layout.dialog_add_book_type, null);
         builder.setView(dialogView);
+
         final Dialog dialog = builder.show();
         Button add = dialogView.findViewById(R.id.btnAdd_Dialog_Add_Book_Type);
         Button cancel = dialogView.findViewById(R.id.btnCancel_Dialog_Add_Book_Type);

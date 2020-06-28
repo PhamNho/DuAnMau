@@ -18,7 +18,6 @@ public class TypeBookSpinnerAdapter extends BaseAdapter {
 
     public Context context;
     private List<BookType> bookTypeList;
-
     public TypeBookSpinnerAdapter(Context context, List<BookType> bookTypeList) {
         this.context = context;
         this.bookTypeList = bookTypeList;

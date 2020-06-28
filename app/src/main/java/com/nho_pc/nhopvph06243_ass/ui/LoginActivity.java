@@ -57,13 +57,11 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         if (user2.getPassword().equals(edtPassword.getText().toString().trim())) {
                             reUser(edtUser.getText().toString().trim(), edtPassword.getText().toString().trim(), cbRemember.isChecked());
-                            reUser(edtUser.getText().toString().trim(), edtPassword.getText().toString().trim());
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             Toast.makeText(LoginActivity.this, getText(R.string.hello)+" "+user2.getName(), Toast.LENGTH_SHORT).show();
                         } else {
                             edtPassword.setError(getString(R.string.wrong_pass));
                         }
-
                     }
                 }
             }
@@ -95,14 +93,6 @@ public class LoginActivity extends AppCompatActivity {
             edtPassword.setText(strPassWord);
             edtUser.setText(strUserName);
         }
-    }
-
-    private void reUser(String u, String p) {
-        SharedPreferences pref = getSharedPreferences("USER_FILE2", MODE_PRIVATE);
-        SharedPreferences.Editor edit = pref.edit();
-        edit.putString("UserName", u);
-        edit.putString("PassWord", p);
-        edit.apply();
     }
 
     @Override

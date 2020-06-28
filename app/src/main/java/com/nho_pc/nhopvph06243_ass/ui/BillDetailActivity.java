@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -106,7 +105,7 @@ public class BillDetailActivity extends AppCompatActivity implements OnDelete, O
     private void showDialogAddBillDetail() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") View dialogView = Objects.requireNonNull(inflater).inflate(R.layout.activity_add_bill_detail, null);
+        @SuppressLint("InflateParams") View dialogView = Objects.requireNonNull(inflater).inflate(R.layout.dialog_add_bill_detail, null);
         builder.setView(dialogView);
         final Dialog dialog = builder.show();
 
@@ -127,7 +126,6 @@ public class BillDetailActivity extends AppCompatActivity implements OnDelete, O
                 } else if (Integer.parseInt(strQuantity) <= 0) {
                     edQuantity.setError(getString(R.string.notify_Quantity_equal_0));
                 } else {
-
                     Book book = bookDAO.getBookByID(strBookID);
                     if (book != null) {
                         billDetails = billDetailDAO.getAllBillDetailsByBookID(strBookID);

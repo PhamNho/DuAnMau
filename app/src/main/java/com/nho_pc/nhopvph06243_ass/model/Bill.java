@@ -1,7 +1,6 @@
 package com.nho_pc.nhopvph06243_ass.model;
 
 public class Bill {
-
     private String Bill_ID;
     private long Date;
     public Bill(String bill_ID, long date) {

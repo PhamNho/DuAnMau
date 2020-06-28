@@ -18,8 +18,8 @@
             android:padding="16dp">
 
             <ImageView
-                android:layout_width="300dp"
-                android:layout_height="120dp"
+                android:layout_width="249dp"
+                android:layout_height="72dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="30dp"
                 android:src="@drawable/logo_nhasachphuongnam"
@@ -65,7 +65,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:text="Chọn"
                     android:textAllCaps="false"
                     tools:ignore="HardcodedText" />

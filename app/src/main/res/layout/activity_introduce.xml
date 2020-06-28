@@ -16,7 +16,6 @@
             android:layout_height="match_parent"
             app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="Phương Nam"
             android:scrollbarSize="16sp">
 
             <ImageView
@@ -27,6 +26,7 @@
                 app:layout_collapseMode="parallax" />
             <!--Toolbar-->
             <android.support.v7.widget.Toolbar
+                app:titleTextColor="#ffffff"
                 android:id="@+id/customtoolbarIntroduce"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"

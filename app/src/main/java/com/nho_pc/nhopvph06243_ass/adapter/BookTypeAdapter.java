@@ -22,7 +22,6 @@ public class BookTypeAdapter extends RecyclerView.Adapter<BookTypeAdapter.ViewHo
     private final OnEdit onEdit;
 
 
-
     public BookTypeAdapter(List<BookType> typeBookList, OnDelete onDelete, OnEdit onEdit) {
         this.typeBookList = typeBookList;
         this.onDelete = onDelete;
@@ -94,48 +93,5 @@ public class BookTypeAdapter extends RecyclerView.Adapter<BookTypeAdapter.ViewHo
             imgEdit = itemView.findViewById(R.id.imgEdit_Book_Type_Item_Type);
             imgDelete = itemView.findViewById(R.id.imgDelete_Book_Type_Item_Type);
         }
-
     }
-
-//    public void resetData() {
-//        typeBookList = typeBookSortList;
-//    }
-//
-//    public Filter getFilter() {
-//        if (bookTypeFilter == null)
-//            bookTypeFilter = new CustomFilter();
-//        return bookTypeFilter;
-//    }
-//
-//    private class CustomFilter extends Filter {
-//        @Override
-//        protected FilterResults performFiltering(CharSequence constraint) {
-//            FilterResults results = new FilterResults();
-//            // We implement here the filter logic
-//            if (constraint == null || constraint.length() == 0) {
-//                results.values = typeBookSortList;
-//                results.count = typeBookSortList.size();
-//            } else {
-//                List<BookType> bookTypeList = new ArrayList<BookType>();
-//                for (BookType p : typeBookList) {
-//                    if
-//                            (p.getId().toUpperCase().startsWith(constraint.toString().toUpperCase()))
-//                        bookTypeList.add(p);
-//                }
-//                results.values = bookTypeList;
-//                results.count = bookTypeList.size();
-//            }
-//            return results;
-//        }
-//
-//        @Override
-//        protected void publishResults(CharSequence constraint, FilterResults results) {
-//            if (results.count == 0)
-//                recyclerView.invalidate();
-//            else {
-//                typeBookList = (List<BookType>)results.values;
-//                notifyDataSetChanged();
-//            }
-//        }
-//    }
 }
